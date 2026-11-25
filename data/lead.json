@@ -1,42 +1,153 @@
 {
   "soil_background_iowa_mg_kg": {
-    "samples": 91, "mean": 23.1, "median": 21.7, "min": 8.4, "p95": 35.0, "max": 48.5,
-    "years": "2007-2010", "note": "Geogenic surface soil samples",
+    "samples": 91,
+    "mean": 23.1,
+    "median": 21.7,
+    "min": 8.4,
+    "p95": 35.0,
+    "max": 48.5,
+    "years": "2007-2010",
+    "note": "Geogenic surface soil samples",
     "source": "epa-usgs-soil-lead"
   },
   "soil_national_medians_mg_kg": {
-    "top_0_5cm": 18.1, "a_horizon": 17.8, "c_horizon": 14.9,
+    "top_0_5cm": 18.1,
+    "a_horizon": 17.8,
+    "c_horizon": 14.9,
     "source": "usgs-sir-2017-5118"
   },
   "screening_levels_ppm": {
-    "residential_screening": 200, "residential_removal": 600,
-    "issued": "2025-10-16", "source": "epa-soil-lead-directive"
+    "residential_screening": 200,
+    "residential_removal": 600,
+    "issued": "2025-10-16",
+    "source": "epa-soil-lead-directive"
   },
   "air_monitor": {
     "site": "Griffin Pipe, Council Bluffs (Pottawattamie County)",
     "aqs_id": "19-155-0011",
     "max_rolling_3mo_ug_m3": [
-      { "year": 2023, "value": 0.06 },
-      { "year": 2024, "value": 0.11 },
-      { "year": 2025, "value": 0.11 }
+      {
+        "year": 2023,
+        "value": 0.06
+      },
+      {
+        "year": 2024,
+        "value": 0.11
+      },
+      {
+        "year": 2025,
+        "value": 0.11
+      }
     ],
     "design_value_2023_2025": 0.11,
     "naaqs_ug_m3": 0.15,
     "source": "iadnr-lead-dv-2025"
   },
   "history": [
-    { "text": "Council Bluffs was out of attainment for lead; its monitor exceeded the standard six times in 2010.", "source": "sierra-ia-lead" },
-    { "text": "EPA fined Griffin Pipe $950,000 over lead emissions; the plant closed in 2014.", "source": "sierra-ia-lead" },
-    { "text": "Iowa DNR reports no Iowa facility now emits over 0.5 tons of lead a year.", "source": "iadnr-network-assessment" },
-    { "text": "Leaded aviation fuel for piston-engine aircraft is a remaining national source of airborne lead.", "source": "epa-lead-air" }
+    {
+      "text": "Council Bluffs was out of attainment for lead; its monitor exceeded the standard six times in 2010.",
+      "source": "sierra-ia-lead"
+    },
+    {
+      "text": "EPA fined Griffin Pipe $950,000 over lead emissions; the plant closed in 2014.",
+      "source": "sierra-ia-lead"
+    },
+    {
+      "text": "Iowa DNR reports no Iowa facility now emits over 0.5 tons of lead a year.",
+      "source": "iadnr-network-assessment"
+    },
+    {
+      "text": "Leaded aviation fuel for piston-engine aircraft is a remaining national source of airborne lead.",
+      "source": "epa-lead-air"
+    }
   ],
   "deposition_reference": [
-    { "place": "Champaign, IL (Morrow Plots)", "value_mg_m2_yr": 270, "when": "peak around 1940", "source": "usgs-champaign-pb" },
-    { "place": "Northeastern US forests", "value_mg_m2_yr": 35, "when": "late 1970s", "source": "kaste-richardson-2014" },
-    { "place": "Northeastern US forests", "value_mg_m2_yr": 0.65, "when": "mid-1990s", "source": "kaste-richardson-2014" }
+    {
+      "place": "Champaign, IL (Morrow Plots)",
+      "value_mg_m2_yr": 270,
+      "when": "peak around 1940",
+      "source": "usgs-champaign-pb"
+    },
+    {
+      "place": "Northeastern US forests",
+      "value_mg_m2_yr": 35,
+      "when": "late 1970s",
+      "source": "kaste-richardson-2014"
+    },
+    {
+      "place": "Northeastern US forests",
+      "value_mg_m2_yr": 0.65,
+      "when": "mid-1990s",
+      "source": "kaste-richardson-2014"
+    }
   ],
   "manure_pb_mg_kg_dry": [
-    { "type": "Dairy manure", "value": 4.3, "note": "highest sample", "source": "mcbride-spiers-2001" },
-    { "type": "Swine manure", "value": 5.7, "note": "fresh, rising to 7.9 during composting", "source": "sdsu-swine-metals" }
-  ]
+    {
+      "type": "Dairy manure",
+      "value": 4.3,
+      "note": "highest sample",
+      "source": "mcbride-spiers-2001"
+    },
+    {
+      "type": "Swine manure",
+      "value": 5.7,
+      "note": "fresh, rising to 7.9 during composting",
+      "source": "sdsu-swine-metals"
+    }
+  ],
+  "detonation_2026": {
+    "date": "2026-11-25",
+    "site": "Iowa Army Ammunition Plant, Middletown (Des Moines County)",
+    "site_source": "epa-iaaap-notice",
+    "plan": "Two controlled detonations of degraded lead azide set for about 9 a.m. CST, inside earth-covered concrete magazines ringed with sand barriers, with wetted soil and water misters to hold dust down",
+    "plan_source": "cbs-chicago-iaaap-2026",
+    "lead_azide_lb": 10000,
+    "lead_azide_note": "About 68 barrels, reported as roughly 10,000 pounds or 5 tons",
+    "lead_azide_source": "cbs-iaaap-2026",
+    "facts": [
+      {
+        "text": "The Army's Nov 24 forecast had winds from the northeast, with fallout across a narrow stretch of southeast Iowa and northeast Missouri, and dust aloft toward Kirksville and US 36 about eight hours later.",
+        "source": "abc7-iaaap-2026"
+      },
+      {
+        "text": "The Army's maps put the strongest effects within about 30 square miles of the plant, with the dust cloud able to travel up to 100 miles.",
+        "source": "cbs-iaaap-2026"
+      },
+      {
+        "text": "About 350 farms could be in the plume's path, per USDA. Iowa HHS says this is a projection, not confirmed contamination.",
+        "source": "iowa-hhs-iaaap-2026"
+      },
+      {
+        "text": "The Army says its modeling shows airborne lead may rise but stay well below the level where EPA requires protective action. It published no number.",
+        "source": "cbs-chicago-iaaap-2026"
+      },
+      {
+        "text": "The Army cited a 1977 Colorado detonation that kept 75% of its lead on site.",
+        "source": "abc7-iaaap-2026"
+      },
+      {
+        "text": "EPA and the Army are sampling air, soil and surfaces before, during and after, with soil and wipe sampling within 24 hours where modeled deposition passes a permit threshold. No results were published in the sources read on Nov 25.",
+        "source": "cbs-chicago-iaaap-2026"
+      }
+    ],
+    "guidance": [
+      {
+        "text": "Keep windows and doors closed for 24 to 48 hours and set heating or cooling to recirculate.",
+        "source": "iowa-hhs-iaaap-2026"
+      },
+      {
+        "text": "Protect livestock feed and water from dust. Ask IDALS and USDA about crops, feed and food production.",
+        "source": "iowa-hhs-iaaap-2026"
+      },
+      {
+        "text": "Bring animals, hay bales and water indoors.",
+        "source": "cbs-chicago-iaaap-2026",
+        "note": "Iowa Department of Agriculture advice before the earlier date"
+      },
+      {
+        "text": "Wet-clean surfaces children touch, like play equipment and windowsills. Don't dry sweep.",
+        "source": "iowa-hhs-iaaap-2026"
+      }
+    ]
+  }
 }

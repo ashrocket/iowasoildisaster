@@ -13,6 +13,11 @@
  *      c_next = c + (E x (c_sub - c) + inputs) / M
  *    where M is the plow layer mass (kg), E the eroded mass (kg) and inputs in mg.
  *
+ * 3. A one-time lead pulse (the Nov 25, 2026 lead azide detonation):
+ *    lead (kg) = lead azide (kg) x lead's share of Pb(N3)2 by weight
+ *    pulse (mg/m2) = lead x share leaving the plant / area it settles on
+ *    It is added to the plow layer in its year like any other input.
+ *
  * The same file runs in the browser (window.IowaModel) and in Node (require).
  */
 (function (root) {
@@ -21,6 +26,10 @@
   var M2_PER_ACRE = 4046.8564;
   var KG_PER_SHORT_TON = 907.18474;
   var SECONDS_PER_YEAR = 31557600;
+  var KG_PER_LB = 0.45359237;
+  var M2_PER_SQ_MI = 2589988.11;
+  // Lead azide is Pb(N3)2: one lead atom (207.2) and six nitrogen atoms (14.007 each).
+  var PB_SHARE_OF_LEAD_AZIDE = 207.2 / (207.2 + 6 * 14.007);   // about 0.711
 
   /** Short tons of soil in one acre, one inch deep, at a bulk density in g/cm3. */
   function tonsPerAcreInch(bulkDensity) {
@@ -36,9 +45,26 @@
   }
 
   /**
+   * Lead from a one-time detonation spread evenly over an area.
+   * Returns { leadKg, escapedKg, mgM2 }.
+   */
+  function detonationPulse(leadAzideLb, escapeFraction, spreadSqMi) {
+    var leadKg = leadAzideLb * KG_PER_LB * PB_SHARE_OF_LEAD_AZIDE;
+    var escapedKg = leadKg * escapeFraction;
+    return { leadKg: leadKg, escapedKg: escapedKg, mgM2: (escapedKg * 1e6) / (spreadSqMi * M2_PER_SQ_MI) };
+  }
+
+  /** How many mg/kg a deposit of mgM2 adds when mixed into a soil layer layerIn inches deep. */
+  function addedPpm(mgM2, layerIn, bulkDensity) {
+    var kgPerM2 = layerIn * 0.0254 * bulkDensity * 1000;
+    return mgM2 / kgPerM2;
+  }
+
+  /**
    * Run the outlook for one crop.
    * opts: { C, R, K, LS, P, T, rTrend, baseYear, startYear, endYear,
-   *         bulkDensity, plowLayerIn, pb0, pbSub, depositionMgM2Yr, manurePbMgKg, manureDryTonsAc }
+   *         bulkDensity, plowLayerIn, pb0, pbSub, depositionMgM2Yr, manurePbMgKg, manureDryTonsAc,
+   *         pulseMgM2, pulseYear }   (the last two are optional: a one-time lead input in one year)
    */
   function runCrop(opts) {
     var perInch = tonsPerAcreInch(opts.bulkDensity);
@@ -58,7 +84,8 @@
       var A = R * opts.K * opts.LS * opts.C * opts.P;
       var erodedKg = A * KG_PER_SHORT_TON;
       pbExportedMg += erodedKg * pb;
-      pb = pb + (erodedKg * (opts.pbSub - pb) + inputsMg) / plowKg;
+      var yearInputsMg = inputsMg + (opts.pulseMgM2 && y === opts.pulseYear ? opts.pulseMgM2 * M2_PER_ACRE : 0);
+      pb = pb + (erodedKg * (opts.pbSub - pb) + yearInputsMg) / plowKg;
       cumTons += A;
       if (A > opts.T) yearsOverT++;
       years.push({ year: y, R: R, tonsPerAcre: A, cumTons: cumTons, cumInches: cumTons / perInch, pb: pb });
@@ -88,6 +115,12 @@
     var deposition = scenario.air_ug_m3 > 0
       ? dryDepositionMgM2Yr(scenario.air_ug_m3, li.deposition_velocity_cm_s.value)
       : li.background_deposition_mg_m2_yr.value;
+    var pulse = null;
+    if (scenario.detonation) {
+      var det = li.detonation;
+      pulse = detonationPulse(lead.detonation_2026.lead_azide_lb, det.escape_fraction.value, det.spread_sq_mi.value);
+      pulse.year = Number(lead.detonation_2026.date.slice(0, 4));
+    }
 
     var results = crops.filter(function (c) { return model.crops[c.id]; }).map(function (crop) {
       var cfg = model.crops[crop.id];
@@ -102,7 +135,9 @@
         pbSub: model.soil.subsoil_pb_mg_kg.value,
         depositionMgM2Yr: deposition,
         manurePbMgKg: scenario.manure ? li.manure_pb_mg_kg_dry.value : 0,
-        manureDryTonsAc: scenario.manure ? li.manure_rate_dry_tons_ac_yr.value : 0
+        manureDryTonsAc: scenario.manure ? li.manure_rate_dry_tons_ac_yr.value : 0,
+        pulseMgM2: pulse ? pulse.mgM2 : 0,
+        pulseYear: pulse ? pulse.year : null
       });
       out.id = crop.id;
       out.name = crop.name;
@@ -112,7 +147,7 @@
       return out;
     });
 
-    return { crops: results, depositionMgM2Yr: deposition, scenario: scenario, trend: trend };
+    return { crops: results, depositionMgM2Yr: deposition, pulse: pulse, scenario: scenario, trend: trend };
   }
 
   /** Minimal CSV parser: handles quoted fields with commas. Numbers become numbers, blanks become null. */
@@ -140,7 +175,8 @@
     });
   }
 
-  var api = { tonsPerAcreInch: tonsPerAcreInch, dryDepositionMgM2Yr: dryDepositionMgM2Yr, runCrop: runCrop, runAll: runAll, parseCSV: parseCSV };
+  var api = { PB_SHARE_OF_LEAD_AZIDE: PB_SHARE_OF_LEAD_AZIDE, tonsPerAcreInch: tonsPerAcreInch, dryDepositionMgM2Yr: dryDepositionMgM2Yr,
+    detonationPulse: detonationPulse, addedPpm: addedPpm, runCrop: runCrop, runAll: runAll, parseCSV: parseCSV };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.IowaModel = api;
 })(this);

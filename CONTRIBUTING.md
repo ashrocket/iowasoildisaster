@@ -22,6 +22,7 @@ Values with `"source": "assumption"` are placeholders the model needs. They are 
 - Iowa's own deep-soil (12 to 24 inch) lead figures from the Iowa Geological Survey's 2003 sampling, to replace the national subsoil value
 - A current rural Iowa lead deposition rate
 - Typical manure application rates on Iowa cropland
+- Measured lead from the Nov 25, 2026 detonation: EPA or Army air, soil and wipe sampling results, which should replace the share leaving the plant and the fallout area in `data/model.json`
 
 ## Add a crop
 

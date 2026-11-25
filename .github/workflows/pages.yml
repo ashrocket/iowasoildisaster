@@ -1,8 +1,9 @@
 name: Publish site to GitHub Pages
 
+# Runs only when started by hand from the Actions tab, so nothing is published
+# until the owner turns on Pages and chooses to. To publish on every merge,
+# add:  push: { branches: [main] }
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:

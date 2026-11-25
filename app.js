@@ -85,10 +85,10 @@
   var COLUMNS = [
     { x: 0, w: 620, ids: ['hero', 'farms', 'model'] },
     { x: 720, w: 1160, ids: ['crops', 'statewide', 'contribute', 'sources'] },
-    { x: 1980, w: 580, ids: ['weather', 'leadsoil', 'leadair'] }
+    { x: 1980, w: 580, ids: ['weather', 'leadsoil', 'leadair', 'detonation'] }
   ];
   var GAP = 48;
-  var JUMPS = [['hero', 'Overview'], ['crops', 'Crops'], ['statewide', 'Statewide'], ['weather', 'Weather'], ['leadsoil', 'Lead'], ['model', 'Model'], ['contribute', 'Contribute'], ['sources', 'Sources']];
+  var JUMPS = [['hero', 'Overview'], ['crops', 'Crops'], ['statewide', 'Statewide'], ['weather', 'Weather'], ['leadsoil', 'Lead'], ['detonation', 'Detonation'], ['model', 'Model'], ['contribute', 'Contribute'], ['sources', 'Sources']];
 
   function makeCard(id, cls, w) {
     var el = document.createElement('section');
@@ -218,6 +218,7 @@
       '<div class="callout lead small"><p><b>From air to soil.</b> Lead that settles out of the air is <span class="num">concentration × deposition speed</span>. At the monitor\'s ' + am.design_value_2023_2025 + ' µg/m³ and ' + D.model.lead_inputs.deposition_velocity_cm_s.value + ' cm/s' + src(D.model.lead_inputs.deposition_velocity_cm_s.source) + ' that is <b class="num">' + M.dryDepositionMgM2Yr(am.design_value_2023_2025, D.model.lead_inputs.deposition_velocity_cm_s.value).toFixed(1) + ' mg/m² a year</b>, an upper estimate because it uses the worst 3-month average. Pick "Beside the Council Bluffs monitor" to run it.</p></div>' +
       '<p class="small muted">For scale: lead fell at about ' + ld.deposition_reference.map(function (d) { return d.value_mg_m2_yr + ' mg/m²/yr in ' + esc(d.place) + ' (' + esc(d.when) + ')' + src(d.source); }).join(', ') + '.</p>';
 
+    renderDetonation();
     renderContribute();
     cards.sources.innerHTML =
       '<div class="eyebrow">Sources</div>' +
@@ -233,6 +234,35 @@
   function barRow(label, value, max, color, text) {
     var pct = Math.max(0, Math.min(100, (value / max) * 100));
     return '<div class="bar"><span>' + esc(label) + '</span><div class="bar-track"><div class="bar-fill" style="width:' + pct.toFixed(1) + '%;background:' + color + '"></div></div><span class="num">' + esc(text) + '</span></div>';
+  }
+
+  // The Nov 25, 2026 lead azide detonation at the Iowa Army Ammunition Plant.
+  function renderDetonation() {
+    var dt = D.lead.detonation_2026, det = D.model.lead_inputs.detonation;
+    var bd = D.model.soil.bulk_density_g_cm3.value, plow = D.model.soil.plow_layer_in.value, top = det.surface_layer_in.value;
+    var bgDep = D.model.lead_inputs.background_deposition_mg_m2_yr.value;
+    var base = M.detonationPulse(dt.lead_azide_lb, det.escape_fraction.value, det.spread_sq_mi.value);
+    var screening = D.lead.screening_levels_ppm.residential_screening;
+    var cases = det.compare_areas_sq_mi.map(function (a) {
+      return { label: a + ' sq mi, ' + Math.round(det.escape_fraction.value * 100) + '% leaves the plant', p: M.detonationPulse(dt.lead_azide_lb, det.escape_fraction.value, a) };
+    });
+    cases.push({ label: '1 sq mi, all of it leaves the plant', p: M.detonationPulse(dt.lead_azide_lb, 1, 1), extreme: true });
+    var worstTop = M.addedPpm(cases[cases.length - 1].p.mgM2, top, bd);
+    cards.detonation.innerHTML =
+      '<div class="eyebrow">Nov 25, 2026 · ' + esc(dt.site) + src(dt.site_source) + '</div>' +
+      '<h2>The Army set off about ' + num(dt.lead_azide_lb) + ' lb of lead azide</h2>' +
+      '<p class="small">' + esc(dt.plan) + '.' + src(dt.plan_source) + ' ' + esc(dt.lead_azide_note) + '.' + src(dt.lead_azide_source) + '</p>' +
+      '<ul class="rows small">' + dt.facts.map(function (f) { return '<li><span>' + esc(f.text) + src(f.source) + '</span><span></span></li>'; }).join('') + '</ul>' +
+      '<div class="formula">' + num(dt.lead_azide_lb) + ' lb × ' + (M.PB_SHARE_OF_LEAD_AZIDE * 100).toFixed(1) + '% lead = ' + num(base.leadKg) + ' kg of lead' +
+        '<small>Lead azide is Pb(N₃)₂, so lead is 207.2 of its 291.2 weight. If ' + Math.round(det.escape_fraction.value * 100) + '% leaves the plant' + src(det.escape_fraction.source) + ' and settles evenly over ' + det.spread_sq_mi.value + ' square miles' + src(det.spread_sq_mi.source) + ', that is <b class="num">' + base.mgM2.toFixed(1) + ' mg/m²</b>, about ' + Math.round(base.mgM2 / bgDep) + ' years of background lead fall in one day.</small></div>' +
+      '<div style="overflow-x:auto"><table class="inputs"><thead><tr><th>If it settles on</th><th>Lead fall</th><th>Plowed in (' + plow + ' in)</th><th>Left on top (' + top + ' in)' + src(det.surface_layer_in.source) + '</th></tr></thead><tbody>' +
+        cases.map(function (c) {
+          return '<tr' + (c.extreme ? ' class="muted"' : '') + '><td>' + esc(c.label) + '</td><td class="num">' + c.p.mgM2.toFixed(c.p.mgM2 < 100 ? 1 : 0) + ' mg/m²</td><td class="num">+' + M.addedPpm(c.p.mgM2, plow, bd).toFixed(2) + ' ppm</td><td class="num">+' + M.addedPpm(c.p.mgM2, top, bd).toFixed(1) + ' ppm</td></tr>';
+        }).join('') +
+      '</tbody></table></div>' +
+      '<div class="callout lead small"><p><b>What the arithmetic says:</b> spread over fields, even the tightest case adds about ' + worstTop.toFixed(0) + ' ppm to the top inch, on soil that already holds about ' + D.lead.soil_background_iowa_mg_kg.mean + ' ppm, against EPA\'s ' + screening + ' ppm residential screening level. These are estimates. The Army\'s maps show a narrower core of heavier fallout, dust on hay, leaves, feed and water is not in the soil yet, and the blast site itself is not in this table. EPA and Army sampling results should replace these numbers when they are published. Pick "' + esc(D.model.lead_inputs.scenarios.filter(function (x) { return x.detonation; })[0].label) + '" to run the ' + det.spread_sq_mi.value + ' square mile case through the ten-year outlook.</p></div>' +
+      '<div class="eyebrow" style="margin-top:14px">Official advice for people in the plume</div>' +
+      '<ul class="rows small">' + dt.guidance.map(function (g) { return '<li><span>' + esc(g.text) + src(g.source) + (g.note ? ' <span class="muted">' + esc(g.note) + '</span>' : '') + '</span><span></span></li>'; }).join('') + '</ul>';
   }
 
   function renderContribute() {
@@ -380,6 +410,7 @@
     document.getElementById('lead-outlook').innerHTML =
       '<div class="callout lead"><p><b>Outlook, ' + esc(run.scenario.label) + ':</b> lead added at <span class="num">' + run.depositionMgM2Yr.toFixed(2) + ' mg/m²</span> a year' +
       (run.scenario.manure ? ' plus manure at ' + D.model.lead_inputs.manure_pb_mg_kg_dry.value + ' mg/kg' + src(D.model.lead_inputs.manure_pb_mg_kg_dry.source) : '') +
+      (run.pulse ? ', plus a one-time <span class="num">' + run.pulse.mgM2.toFixed(1) + ' mg/m²</span> from the Nov 25 detonation in ' + run.pulse.year + ' (an estimate)' : '') +
       '. By ' + D.model.end_year + ' a corn field goes from <b class="num">' + corn.pbStart.toFixed(1) + '</b> to <b class="num">' + corn.pbEnd.toFixed(1) + '</b> ppm and an alfalfa field to <b class="num">' + hay.pbEnd.toFixed(1) + '</b> ppm.</p></div>' +
       '<p class="small">At these rates lead in Iowa farm soil barely changes in ten years and stays far below EPA levels. Erosion is the larger threat. ' +
       (corn.pbEnd < corn.pbStart
@@ -396,7 +427,7 @@
       '<div class="eyebrow">How the outlook is calculated</div>' +
       '<h2>Two formulas, run once a year for ten seasons</h2>' +
       '<div class="formula">A = R × K × LS × C × P<small>Revised Universal Soil Loss Equation: tons of soil lost per acre each year. R rises each year by the rain intensity you pick (' + esc(run.trend.label) + ').</small></div>' +
-      '<div class="formula">c′ = c + (E·(c<sub>sub</sub> − c) + I) / M<small>Lead in the plow layer: eroded soil E leaves with its lead c, the same mass of subsoil at c<sub>sub</sub> mixes in, and air and manure add I. M is the plow layer\'s mass.</small></div>' +
+      '<div class="formula">c′ = c + (E·(c<sub>sub</sub> − c) + I) / M<small>Lead in the plow layer: eroded soil E leaves with its lead c, the same mass of subsoil at c<sub>sub</sub> mixes in, and air, manure and the one-time detonation pulse add I. M is the plow layer\'s mass.</small></div>' +
       '<p class="small">Topsoil depth lost = tons lost ÷ <span class="num">' + M.tonsPerAcreInch(s.bulk_density_g_cm3.value).toFixed(1) + '</span> tons in one acre-inch at ' + s.bulk_density_g_cm3.value + ' g/cm³.</p>' +
       '<div style="overflow-x:auto"><table class="inputs"><thead><tr><th>Input</th><th>Value</th><th>Source</th></tr></thead><tbody>' +
         row('R, rainfall erosivity', e.R.value, '', e.R.source, e.R.note) +
@@ -411,6 +442,8 @@
         row('Subsoil lead', s.subsoil_pb_mg_kg.value, 'mg/kg', s.subsoil_pb_mg_kg.source, s.subsoil_pb_mg_kg.note) +
         row('Background lead deposition', li.background_deposition_mg_m2_yr.value, 'mg/m²/yr', li.background_deposition_mg_m2_yr.source, li.background_deposition_mg_m2_yr.note) +
         row('Deposition speed', li.deposition_velocity_cm_s.value, 'cm/s', li.deposition_velocity_cm_s.source, li.deposition_velocity_cm_s.note) +
+        row('Detonation lead leaving the plant', Math.round(li.detonation.escape_fraction.value * 100) + '%', '', li.detonation.escape_fraction.source, li.detonation.escape_fraction.note) +
+        row('Detonation fallout area', li.detonation.spread_sq_mi.value, 'sq mi', li.detonation.spread_sq_mi.source, li.detonation.spread_sq_mi.note) +
         row('Manure lead, rate', li.manure_pb_mg_kg_dry.value + ' mg/kg, ' + li.manure_rate_dry_tons_ac_yr.value, 'dry t/ac/yr', li.manure_rate_dry_tons_ac_yr.source, li.manure_rate_dry_tons_ac_yr.note) +
       '</tbody></table></div>' +
       '<div style="overflow-x:auto"><table class="inputs"><thead><tr><th>Crop</th><th>C, plowed</th><th>C, reduced</th><th>C, no-till</th></tr></thead><tbody>' +

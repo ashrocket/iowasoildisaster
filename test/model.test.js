@@ -58,3 +58,25 @@ test('reduced tillage corn and soybeans land near the measured Iowa average of 4
 test('every crop in crops.csv has model settings', () => {
   for (const c of crops) assert.ok(model.crops[c.id], `missing model.crops.${c.id}`);
 });
+
+test('lead azide is about 71% lead by weight', () => {
+  assert.ok(Math.abs(M.PB_SHARE_OF_LEAD_AZIDE - 0.7114) < 0.0005);
+});
+
+test('10,000 lb of lead azide, 25% escaping over 30 square miles, leaves about 10.4 mg/m2', () => {
+  const p = M.detonationPulse(10000, 0.25, 30);
+  assert.ok(Math.abs(p.leadKg - 3227) < 2, `lead ${p.leadKg}`);
+  assert.ok(Math.abs(p.mgM2 - 10.38) < 0.02, `pulse ${p.mgM2}`);
+});
+
+test('a one-time pulse raises plow layer lead once, by pulse / layer mass', () => {
+  const r = M.runCrop({ ...base, C: 0, pulseMgM2: 10.38, pulseYear: 2026 });
+  const added = M.addedPpm(10.38, 8, 1.33);
+  assert.ok(Math.abs(r.years[0].pb - (23.1 + added)) < 1e-9);
+  assert.ok(Math.abs(r.pbEnd - r.years[0].pb) < 1e-9);
+});
+
+test('the detonation scenario runs and adds its pulse in 2026', () => {
+  const r = M.runAll(crops, model, lead, { tillage: 'reduced', trendId: 'steady', scenarioId: 'detonation' });
+  assert.ok(r.pulse && r.pulse.year === 2026 && r.pulse.mgM2 > 0);
+});

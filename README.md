@@ -65,12 +65,21 @@ c_next = c + (E × (c_sub − c) + I) / M
 - `I` is lead added by air and manure. Air deposition is `concentration × deposition speed`. The "Beside the Council Bluffs monitor" scenario uses the monitor's 0.11 µg/m³ design value and an assumed 0.5 cm/s.
 - `M` is the plow layer mass.
 
+**The Nov 25, 2026 detonation** of about 10,000 lb of lead azide at the Iowa Army Ammunition Plant is a one-time input, not a yearly one:
+
+```
+lead (kg)     = lead azide (kg) × 0.711        lead's share of Pb(N3)2 by weight
+pulse (mg/m²) = lead × share leaving the plant ÷ area it settles on
+```
+
+The defaults are 25% leaving the plant (the Army cited a 1977 detonation that kept 75% on site) and an even spread over the 30 square miles where the Army expected the strongest effects. That gives about 10.4 mg/m², which the "In the Nov 25 detonation fallout zone" scenario adds to the plow layer in 2026. The page also shows tighter spreads and dust left on the top inch of untilled ground. These are estimates until EPA and Army sampling results are published, and replacing them with measured values is the most useful correction anyone can send.
+
 The model leaves out gullies, wind erosion, tile drainage, rotations within a field, yield effects and plant uptake. It is for comparing crops and practices, not predicting a given field.
 
 ## Corrections and additions
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). In short: edit the file in `data/`, point the value at a source, and open a pull request. A check runs on every pull request, and the site republishes when it is merged.
+See [CONTRIBUTING.md](CONTRIBUTING.md). In short: edit the file in `data/`, point the value at a source, and open a pull request. A check runs on every pull request.
 
 ## Publishing
 
-`.github/workflows/pages.yml` publishes the site to GitHub Pages on every push to `main`. Turn on Pages for the repository (Settings, Pages, Source: GitHub Actions) and set `repo` in `data/site.json`.
+`.github/workflows/pages.yml` can publish the site to GitHub Pages. It is off until the owner turns on Pages (Settings, Pages, Source: GitHub Actions) and runs the workflow from the Actions tab. To republish on every merge, add a `push` trigger for `main` to the workflow.
