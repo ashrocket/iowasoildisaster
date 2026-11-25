@@ -123,6 +123,8 @@
     renderStatic();
     refresh();
     if (window.innerWidth < 760) flyTo(cards.hero, false); else fitAll(false);
+    // Web fonts change card heights once they arrive, so restack when they do.
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(stack);
   }
 
   function stack() {
