@@ -106,6 +106,10 @@
     "lead_azide_source": "cbs-iaaap-2026",
     "facts": [
       {
+        "text": "It went ahead: about 9,700 lb in 68 barrels, set off as two simultaneous detonations at about 9 a.m. CT. The Army says all of the lead azide was destroyed.",
+        "source": "abc-iaaap-blast"
+      },
+      {
         "text": "The Army's Nov 24 forecast had winds from the northeast, with fallout across a narrow stretch of southeast Iowa and northeast Missouri, and dust aloft toward Kirksville and US 36 about eight hours later.",
         "source": "abc7-iaaap-2026"
       },
@@ -128,6 +132,18 @@
       {
         "text": "EPA and the Army are sampling air, soil and surfaces before, during and after, with soil and wipe sampling within 24 hours where modeled deposition passes a permit threshold. No results were published in the sources read on Nov 25.",
         "source": "cbs-chicago-iaaap-2026"
+      },
+      {
+        "text": "EPA says its real-time air monitors showed zero detection of airborne lead about an hour after the blast. It gave no concentrations or detection limits, and no soil, dust or forage results yet.",
+        "source": "epa-air-zero-2026"
+      },
+      {
+        "text": "The Army's modeled ground deposit contours were 5 µg/ft² (light, 0.05 mg/m²) and 100 µg/ft² (heavier, nearer the site, 1.1 mg/m²). These are model runs, not measurements.",
+        "source": "ipr-iaaap-contours"
+      },
+      {
+        "text": "About 350 farms across Iowa and Missouri could lie in the projected plume area, per USDA. No agency has named which counties or farms.",
+        "source": "aljazeera-350-farms"
       }
     ],
     "guidance": [
@@ -147,6 +163,26 @@
       {
         "text": "Wet-clean surfaces children touch, like play equipment and windowsills. Don't dry sweep.",
         "source": "iowa-hhs-iaaap-2026"
+      },
+      {
+        "text": "Move or tarp hay and feed, ask the Army for soil and forage samples, have a vet watch animals, and keep expense records for claims to the Army.",
+        "source": "idals-livestock-2026"
+      }
+    ],
+    "army_contours_mg_m2": {
+      "light": 0.054,
+      "heavy": 1.076,
+      "source": "ipr-iaaap-contours",
+      "note": "5 and 100 micrograms per square foot converted at 10.764 square feet per square meter"
+    },
+    "history": [
+      {
+        "text": "The plant has been a Superfund site since 1990. EPA found lead in its sludges and in Brush Creek sediment in 1984.",
+        "source": "epa-npl-iaaap"
+      },
+      {
+        "text": "The pollution documented off the plant is explosives (RDX, TNT) in creeks and private wells to the south, not lead on farms.",
+        "source": "iadnr-iaaap-profile"
       }
     ]
   }

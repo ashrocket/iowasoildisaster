@@ -27,7 +27,7 @@ const walk = (node, where) => {
     }
   }
 };
-for (const f of ['model.json', 'lead.json', 'weather.json', 'farms.json']) {
+for (const f of ['model.json', 'lead.json', 'weather.json', 'farms.json', 'feed.json']) {
   const j = readJSON(f);
   if (j) walk(j, f);
 }
@@ -40,6 +40,12 @@ crops.forEach((c) => {
   numeric.forEach((k) => { if (c[k] !== null && typeof c[k] !== 'number') errors.push(`crops.csv ${c.id}.${k}: "${c[k]}" is not a number`); });
   if (!ids.has(c.source)) errors.push(`crops.csv ${c.id}: unknown source "${c.source}"`);
   if (model && !model.crops[c.id]) errors.push(`crops.csv ${c.id}: add C factors for it in model.json`);
+});
+const counties = parseCSV(fs.readFileSync(path.join(dir, 'counties.csv'), 'utf8'));
+counties.forEach((c) => {
+  ['farms', 'hay_acres', 'corn_grain_acres', 'cattle_head'].forEach((k) => { if (typeof c[k] !== 'number') errors.push(`counties.csv ${c.id}.${k}: "${c[k]}" is not a number`); });
+  ['beef_cows', 'milk_cows'].forEach((k) => { if (c[k] !== null && typeof c[k] !== 'number') errors.push(`counties.csv ${c.id}.${k}: "${c[k]}" is not a number`); });
+  ['source', 'cows_source'].forEach((k) => { if (!ids.has(c[k])) errors.push(`counties.csv ${c.id}: unknown ${k} "${c[k]}"`); });
 });
 if (model) {
   for (const [id, cfg] of Object.entries(model.crops)) {
@@ -54,4 +60,4 @@ if (errors.length) {
   console.error('Data check failed:\n- ' + errors.join('\n- '));
   process.exit(1);
 }
-console.log(`Data check passed: ${crops.length} crops, ${sources.length} sources.`);
+console.log(`Data check passed: ${crops.length} crops, ${counties.length} counties, ${sources.length} sources.`);

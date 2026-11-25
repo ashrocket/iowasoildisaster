@@ -150,6 +150,61 @@
     return { crops: results, depositionMgM2Yr: deposition, pulse: pulse, scenario: scenario, trend: trend };
   }
 
+
+  // ---------- hay, cattle and ethanol pathway ----------
+  // Lead that settles on standing forage: deposit × share caught ÷ forage mass. mg/m² ÷ kg/m² = mg/kg dry.
+  function forageFromDeposit(depositMgM2, interception, biomassKgM2) { return depositMgM2 * interception / biomassKgM2; }
+  // Rain and wind wash leaf lead off with a half-life.
+  function weathered(mgKg, days, halfLifeDays) { return mgKg * Math.pow(0.5, days / halfLifeDays); }
+  // Lead a plant takes up from soil plus the soil that rides along on hay.
+  function forageFromSoil(soilPpm, soilToForage, soilOnHay) { return soilPpm * (soilToForage + soilOnHay); }
+  // A round bale left outside catches dust only on the top it shows to the sky.
+  function baleFromDeposit(depositMgM2, footprintM2, baleDryKg) { return depositMgM2 * footprintM2 / baleDryKg; }
+
+  /** Where one cow's daily lead goes, from the lead in her feed (mg/kg dry) and the soil she eats. */
+  function cowDay(dietMgKg, soilPpm, cow) {
+    var intake = cow.dmiKg * dietMgKg + cow.soilKg * soilPpm;   // mg a day
+    return {
+      intakeMg: intake,
+      manureMg: intake * (1 - cow.absorbed),
+      absorbedMg: intake * cow.absorbed,
+      milkMgL: intake * cow.milkPerL                           // steady state, if she ate this every day
+    };
+  }
+
+  /** Corn grain lead from soil (low and high ratios), and the distillers grains made from it. Lead does not distill into the fuel. */
+  function ethanolPathway(soilPpm, ratioLow, ratioHigh, ddgsFactor) {
+    var lo = soilPpm * ratioLow, hi = soilPpm * ratioHigh;
+    return { grainLow: lo, grainHigh: hi, ddgsLow: lo * ddgsFactor, ddgsHigh: hi * ddgsFactor, fuel: 0 };
+  }
+
+  /** Reads feed.json into the plain numbers the functions above take. */
+  function feedInputs(feed) {
+    var f = feed.forage, b = feed.bale, c = feed.cow;
+    return {
+      interception: f.interception_fraction.value, biomass: f.standing_biomass_kg_m2.value, halfLife: f.weathering_half_life_days.value,
+      soilToForage: f.soil_to_forage_ratio.value, soilOnHay: f.soil_on_hay_share.value,
+      baleFootprint: b.footprint_m2.value, baleKg: b.dry_matter_kg.value,
+      cow: { dmiKg: c.dry_matter_intake_kg_day.value, soilKg: c.soil_eaten_kg_day.value, absorbed: c.absorbed_share.value, milkPerL: c.milk_transfer_d_per_l.value }
+    };
+  }
+
+  /** One row per feeding case for a given deposit: forage lead, what a cow eats, and where it goes. */
+  function hayCases(depositMgM2, soilPpm, feed) {
+    var k = feedInputs(feed);
+    var fromSoil = forageFromSoil(soilPpm, k.soilToForage, k.soilOnHay);
+    var fresh = forageFromDeposit(depositMgM2, k.interception, k.biomass);
+    var rows = [
+      { id: 'day1', label: 'Grazing the day it fell', forage: fresh + fromSoil },
+      { id: 'day14', label: 'Grazing two weeks later', forage: weathered(fresh, 14, k.halfLife) + fromSoil },
+      { id: 'day30', label: 'Grazing a month later', forage: weathered(fresh, 30, k.halfLife) + fromSoil },
+      { id: 'bale', label: 'Round bale left outside', forage: baleFromDeposit(depositMgM2, k.baleFootprint, k.baleKg) + fromSoil },
+      { id: 'background', label: 'Normal hay, no fallout', forage: fromSoil }
+    ];
+    rows.forEach(function (r) { r.cow = cowDay(r.forage, soilPpm, k.cow); });
+    return rows;
+  }
+
   /** Minimal CSV parser: handles quoted fields with commas. Numbers become numbers, blanks become null. */
   function parseCSV(text) {
     var lines = text.replace(/\r/g, '').split('\n').filter(function (l) { return l.trim() !== ''; });
@@ -176,7 +231,9 @@
   }
 
   var api = { PB_SHARE_OF_LEAD_AZIDE: PB_SHARE_OF_LEAD_AZIDE, tonsPerAcreInch: tonsPerAcreInch, dryDepositionMgM2Yr: dryDepositionMgM2Yr,
-    detonationPulse: detonationPulse, addedPpm: addedPpm, runCrop: runCrop, runAll: runAll, parseCSV: parseCSV };
+    detonationPulse: detonationPulse, addedPpm: addedPpm,
+    forageFromDeposit: forageFromDeposit, weathered: weathered, forageFromSoil: forageFromSoil, baleFromDeposit: baleFromDeposit,
+    cowDay: cowDay, ethanolPathway: ethanolPathway, feedInputs: feedInputs, hayCases: hayCases, runCrop: runCrop, runAll: runAll, parseCSV: parseCSV };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.IowaModel = api;
 })(this);
