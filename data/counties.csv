@@ -1,0 +1,10 @@
+id,name,state,farms,hay_acres,corn_grain_acres,cattle_head,beef_cows,milk_cows,land_in_farms_acres,in_proclamation,on_plume_path,source,cows_source
+des_moines,Des Moines,IA,648,3738,57309,5113,,,148881,yes,plant,census-2022-cp-ia,nass-ia-cattle-2024
+lee,Lee,IA,804,10132,66345,14635,6300,500,223700,yes,yes,census-2022-cp-ia,nass-ia-cattle-2024
+henry,Henry,IA,831,6772,80905,17685,5900,,233603,no,earlier forecast,census-2022-cp-ia,nass-ia-cattle-2024
+louisa,Louisa,IA,597,2186,75419,4262,1800,,188748,no,earlier forecast,census-2022-cp-ia,nass-ia-cattle-2024
+van_buren,Van Buren,IA,732,18192,46337,19164,7900,500,225161,yes,yes,census-2022-cp-ia,nass-ia-cattle-2024
+clark,Clark,MO,574,12248,48349,15654,,,215798,no,yes,census-2022-cp-mo,nass-mo-cattle-2024
+scotland,Scotland,MO,654,24917,37408,30202,9600,2200,212718,no,yes,census-2022-cp-mo,nass-mo-cattle-2024
+knox,Knox,MO,539,20824,36636,36097,10200,500,224997,no,yes,census-2022-cp-mo,nass-mo-cattle-2024
+adair,Adair,MO,804,40647,14241,32947,16300,,249382,no,yes,census-2022-mo-tables,nass-mo-cattle-2024

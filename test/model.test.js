@@ -80,3 +80,26 @@ test('the detonation scenario runs and adds its pulse in 2026', () => {
   const r = M.runAll(crops, model, lead, { tillage: 'reduced', trendId: 'steady', scenarioId: 'detonation' });
   assert.ok(r.pulse && r.pulse.year === 2026 && r.pulse.mgM2 > 0);
 });
+
+const feed = require('../data/feed.json');
+
+test('fallout on standing forage is deposit times share caught over forage mass', () => {
+  assert.ok(Math.abs(M.forageFromDeposit(10, 0.5, 0.24) - 20.833) < 0.01);
+  assert.ok(Math.abs(M.weathered(20, 14, 14) - 10) < 1e-9);
+});
+
+test('a cow on fresh fallout pasture eats about 300 mg a day and 96% leaves in manure', () => {
+  const rows = M.hayCases(10.38, 23.1, feed);
+  const day1 = rows.find((r) => r.id === 'day1');
+  assert.ok(day1.forage > 23 && day1.forage < 25, day1.forage);
+  assert.ok(day1.cow.intakeMg > 280 && day1.cow.intakeMg < 310, day1.cow.intakeMg);
+  assert.ok(Math.abs(day1.cow.manureMg / day1.cow.intakeMg - 0.96) < 1e-9);
+  const bg = rows.find((r) => r.id === 'background');
+  assert.ok(bg.forage < day1.forage && bg.forage > 2 && bg.forage < 2.5);
+});
+
+test('ethanol fuel carries no lead and distillers grains hold about 3 times the grain', () => {
+  const e = M.ethanolPathway(23.1, 0.001, 0.003, 3);
+  assert.equal(e.fuel, 0);
+  assert.ok(Math.abs(e.ddgsHigh - 23.1 * 0.003 * 3) < 1e-9);
+});

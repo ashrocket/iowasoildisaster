@@ -10,6 +10,8 @@ Corrections and additions are welcome as pull requests. Most changes touch only 
    - `data/weather.json` for climate figures
    - `data/lead.json` for lead measurements and limits
    - `data/model.json` for model inputs
+   - `data/feed.json` for the hay, cattle and ethanol pathway
+   - `data/counties.csv` for the counties near the Nov 25 detonation
 2. Change the value. Keep the units the file already uses.
 3. Make sure its `source` field names an entry in `data/sources.json`. If your source is new, add it there with an `id`, `title`, `publisher`, `url` (https) and `accessed` date.
 4. Commit to a new branch and open a pull request. Fill in the template: what changed, why, and the link.
@@ -23,6 +25,8 @@ Values with `"source": "assumption"` are placeholders the model needs. They are 
 - A current rural Iowa lead deposition rate
 - Typical manure application rates on Iowa cropland
 - Measured lead from the Nov 25, 2026 detonation: EPA or Army air, soil and wipe sampling results, which should replace the share leaving the plant and the fallout area in `data/model.json`
+- Forage, hay, milk or distillers grains sampling from the fallout area, which should replace the estimates in `data/feed.json`
+- The names of the counties holding the roughly 350 farms USDA says are in the plume
 
 ## Add a crop
 

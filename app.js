@@ -38,9 +38,9 @@
       return path.slice(-4) === '.csv' ? r.text() : r.json();
     });
   }
-  Promise.all(['data/crops.csv', 'data/farms.json', 'data/weather.json', 'data/lead.json', 'data/model.json', 'data/sources.json', 'data/site.json'].map(get))
+  Promise.all(['data/crops.csv', 'data/farms.json', 'data/weather.json', 'data/lead.json', 'data/model.json', 'data/sources.json', 'data/site.json', 'data/feed.json', 'data/counties.csv'].map(get))
     .then(function (r) {
-      D = { crops: M.parseCSV(r[0]), farms: r[1], weather: r[2], lead: r[3], model: r[4], sources: r[5], site: r[6] };
+      D = { crops: M.parseCSV(r[0]), farms: r[1], weather: r[2], lead: r[3], model: r[4], sources: r[5], site: r[6], feed: r[7], counties: M.parseCSV(r[8]) };
       D.sources.filter(function (s) { return s.id !== 'assumption'; }).forEach(function (s, i) { sourceIndex[s.id] = i + 1; });
       settings.LS = D.model.erosion.LS.value;
       setupControls();
@@ -85,10 +85,11 @@
   var COLUMNS = [
     { x: 0, w: 620, ids: ['hero', 'farms', 'model'] },
     { x: 720, w: 1160, ids: ['crops', 'statewide', 'contribute', 'sources'] },
-    { x: 1980, w: 580, ids: ['weather', 'leadsoil', 'leadair', 'detonation'] }
+    { x: 1980, w: 580, ids: ['weather', 'leadsoil', 'leadair', 'detonation'] },
+    { x: 2660, w: 620, ids: ['hay', 'ethanol', 'counties'] }
   ];
   var GAP = 48;
-  var JUMPS = [['hero', 'Overview'], ['crops', 'Crops'], ['statewide', 'Statewide'], ['weather', 'Weather'], ['leadsoil', 'Lead'], ['detonation', 'Detonation'], ['model', 'Model'], ['contribute', 'Contribute'], ['sources', 'Sources']];
+  var JUMPS = [['hero', 'Overview'], ['crops', 'Crops'], ['statewide', 'Statewide'], ['weather', 'Weather'], ['leadsoil', 'Lead'], ['detonation', 'Detonation'], ['hay', 'Hay and cattle'], ['ethanol', 'Ethanol'], ['counties', 'Counties'], ['model', 'Model'], ['contribute', 'Contribute'], ['sources', 'Sources']];
 
   function makeCard(id, cls, w) {
     var el = document.createElement('section');
@@ -219,6 +220,9 @@
       '<p class="small muted">For scale: lead fell at about ' + ld.deposition_reference.map(function (d) { return d.value_mg_m2_yr + ' mg/m²/yr in ' + esc(d.place) + ' (' + esc(d.when) + ')' + src(d.source); }).join(', ') + '.</p>';
 
     renderDetonation();
+    renderHay();
+    renderEthanol();
+    renderCounties();
     renderContribute();
     cards.sources.innerHTML =
       '<div class="eyebrow">Sources</div>' +
@@ -261,8 +265,93 @@
         }).join('') +
       '</tbody></table></div>' +
       '<div class="callout lead small"><p><b>What the arithmetic says:</b> spread over fields, even the tightest case adds about ' + worstTop.toFixed(0) + ' ppm to the top inch, on soil that already holds about ' + D.lead.soil_background_iowa_mg_kg.mean + ' ppm, against EPA\'s ' + screening + ' ppm residential screening level. These are estimates. The Army\'s maps show a narrower core of heavier fallout, dust on hay, leaves, feed and water is not in the soil yet, and the blast site itself is not in this table. EPA and Army sampling results should replace these numbers when they are published. Pick "' + esc(D.model.lead_inputs.scenarios.filter(function (x) { return x.detonation; })[0].label) + '" to run the ' + det.spread_sq_mi.value + ' square mile case through the ten-year outlook.</p></div>' +
+      (dt.army_contours_mg_m2 ? '<p class="small">The Army\'s own model put the ground deposit at ' + dt.army_contours_mg_m2.light.toFixed(2) + ' to ' + dt.army_contours_mg_m2.heavy.toFixed(1) + ' mg/m²' + src(dt.army_contours_mg_m2.source) + ', about a tenth of this page\'s even-spread estimate or less. The hay card shows both.</p>' : '') +
+      (dt.history ? '<div class="eyebrow" style="margin-top:14px">The plant before today</div><ul class="rows small">' + dt.history.map(function (h) { return '<li><span>' + esc(h.text) + src(h.source) + '</span><span></span></li>'; }).join('') + '</ul>' : '') +
       '<div class="eyebrow" style="margin-top:14px">Official advice for people in the plume</div>' +
       '<ul class="rows small">' + dt.guidance.map(function (g) { return '<li><span>' + esc(g.text) + src(g.source) + (g.note ? ' <span class="muted">' + esc(g.note) + '</span>' : '') + '</span><span></span></li>'; }).join('') + '</ul>';
+  }
+
+
+  // Hay and cattle: where fallout on forage goes once a cow eats it. All estimates.
+  function renderHay() {
+    var fd = D.feed, lim = fd.limits, cow = fd.cow, f = fd.forage;
+    var dt = D.lead.detonation_2026, det = D.model.lead_inputs.detonation;
+    var soil = D.lead.soil_background_iowa_mg_kg.mean;
+    var est = M.detonationPulse(dt.lead_azide_lb, det.escape_fraction.value, det.spread_sq_mi.value).mgM2;
+    var euDry = lim.eu_forage_mg_kg_12pct.value / 0.88;          // the EU limit is at 12% moisture; this is the same limit on a dry basis
+    var codex = lim.codex_milk_mg_kg.value;
+    var rows = M.hayCases(est, soil, fd);
+    var deposits = [{ label: 'This page\'s estimate', d: est }];
+    if (dt.army_contours_mg_m2) {
+      deposits.push({ label: 'Army model, heavier contour', d: dt.army_contours_mg_m2.heavy, s: dt.army_contours_mg_m2.source });
+      deposits.push({ label: 'Army model, light contour', d: dt.army_contours_mg_m2.light, s: dt.army_contours_mg_m2.source });
+    }
+    deposits.push({ label: 'No fallout', d: 0 });
+    var bgDep = D.model.lead_inputs.background_deposition_mg_m2_yr;
+    var day1 = rows[0];
+    var flag = function (v, limit) { return v > limit ? ' <span class="pill warn">over</span>' : ''; };
+    cards.hay.innerHTML =
+      '<div class="eyebrow">Hay and cattle · estimates</div>' +
+      '<h2>Most of the lead a cow eats comes back out onto the same field</h2>' +
+      '<p class="small">Dust that lands on standing grass sticks to the leaves until rain washes it off. A cow that grazes it passes about ' + Math.round((1 - cow.absorbed_share.value) * 100) + '% out in manure' + src(cow.absorbed_share.source) + ', so the lead moves from grass to ground, not off the farm. The ' + Math.round(cow.absorbed_share.value * 100) + '% she absorbs goes mostly to bone.</p>' +
+      '<div class="formula">forage lead = deposit × ' + f.interception_fraction.value + ' ÷ ' + f.standing_biomass_kg_m2.value + ' kg/m²' +
+        '<small>' + Math.round(f.interception_fraction.value * 100) + '% of falling dust is caught by the grass' + src(f.interception_fraction.source) + ', spread over ' + f.standing_biomass_kg_m2.value + ' kg of forage per m²' + src(f.standing_biomass_kg_m2.source) + ', and half washes off every ' + f.weathering_half_life_days.value + ' days' + src(f.weathering_half_life_days.source) + '. Normal hay already holds lead from roots' + src(f.soil_to_forage_ratio.source) + ' and the soil baled with it' + src(f.soil_on_hay_share.source) + '.</small></div>' +
+      '<p class="small muted">At this page\'s ' + est.toFixed(1) + ' mg/m² estimate, for a beef cow eating ' + cow.dry_matter_intake_kg_day.value + ' kg of forage' + src(cow.dry_matter_intake_kg_day.source) + ' and ' + cow.soil_eaten_kg_day.value + ' kg of soil a day' + src(cow.soil_eaten_kg_day.source) + ':</p>' +
+      '<div style="overflow-x:auto"><table class="inputs"><thead><tr><th>Feed</th><th>Forage lead (dry)</th><th>Cow eats</th><th>Milk, if she kept at it' + src(cow.milk_transfer_d_per_l.source) + '</th></tr></thead><tbody>' +
+        rows.map(function (r) {
+          return '<tr><td>' + esc(r.label) + '</td><td class="num">' + r.forage.toFixed(1) + ' mg/kg' + flag(r.forage, euDry) + '</td><td class="num">' + Math.round(r.cow.intakeMg) + ' mg/day</td><td class="num">' + r.cow.milkMgL.toFixed(3) + ' mg/L' + flag(r.cow.milkMgL, codex) + '</td></tr>';
+        }).join('') +
+      '</tbody></table></div>' +
+      '<p class="small muted">Limits: cattle tolerate up to ' + lim.nrc_max_diet_mg_kg_dm.value + ' mg/kg in the diet' + src(lim.nrc_max_diet_mg_kg_dm.source) + '; the EU allows ' + lim.eu_forage_mg_kg_12pct.value + ' mg/kg in forage (about ' + euDry.toFixed(0) + ' dry)' + src(lim.eu_forage_mg_kg_12pct.source) + '; Codex allows ' + codex + ' mg/kg in milk' + src(lim.codex_milk_mg_kg.source) + '.</p>' +
+      '<div class="eyebrow" style="margin-top:14px">How much depends on the fallout, day one on pasture</div>' +
+      '<div style="overflow-x:auto"><table class="inputs"><thead><tr><th>Deposit</th><th>mg/m²</th><th>Forage</th><th>Milk</th></tr></thead><tbody>' +
+        deposits.map(function (x) {
+          var r = M.hayCases(x.d, soil, fd)[0];
+          return '<tr><td>' + esc(x.label) + (x.s ? src(x.s) : '') + '</td><td class="num">' + x.d.toFixed(2) + '</td><td class="num">' + r.forage.toFixed(1) + ' mg/kg</td><td class="num">' + r.cow.milkMgL.toFixed(3) + ' mg/L' + flag(r.cow.milkMgL, codex) + '</td></tr>';
+        }).join('') +
+      '</tbody></table></div>' +
+      '<div class="eyebrow" style="margin-top:14px">Where the lead a cow absorbs collects' + src(cow.tissue_rank_source) + '</div>' +
+      '<div class="bars">' + cow.tissue_rank.map(function (t) {
+        return barRow(t.tissue, t.value, cow.tissue_rank[0].value, 'var(--lead)', Math.round(t.value / cow.tissue_rank[cow.tissue_rank.length - 1].value) + '× milk');
+      }).join('') + '</div>' +
+      '<p class="small muted">Relative amounts only, per mg eaten each day. Bone holds lead for months to years; blood clears with a half-life of about ' + cow.blood_half_life_days.value + ' days' + src(cow.blood_half_life_days.source) + '.</p>' +
+      '<div class="callout lead small"><p><b>What it means:</b> at this page\'s upper estimate, forage stays under the cattle and EU feed limits, but milk from cows grazing fresh fallout every day would pass the Codex level until rain washes the grass. At the Army\'s modeled deposits it stays under. Hay baled before today and stored inside got none of it; bales left outside gained about ' + (rows[3].forage - rows[4].forage).toFixed(2) + ' mg/kg. Next year\'s hay grows from soil that gained about ' + M.addedPpm(est, D.model.soil.plow_layer_in.value, D.model.soil.bulk_density_g_cm3.value).toFixed(2) + ' ppm, too little to see. For scale, 20 years of normal lead fall is about ' + (bgDep.value * 20).toFixed(0) + ' mg/m²' + src(bgDep.source) + ', near this page\'s one-day estimate. These are estimates until forage and milk samples are published.</p></div>';
+  }
+
+  // Ethanol: lead stays with the solids, not the fuel.
+  function renderEthanol() {
+    var c = D.feed.corn, lim = D.feed.limits, soil = D.lead.soil_background_iowa_mg_kg.mean;
+    var e = M.ethanolPathway(soil, c.grain_to_soil_ratio.low, c.grain_to_soil_ratio.high, c.ddgs_concentration_factor.value);
+    cards.ethanol.innerHTML =
+      '<div class="eyebrow">Corn to ethanol · estimates</div>' +
+      '<h2>Lead does not go into the fuel, so burning it puts none back in the air</h2>' +
+      '<p class="small">Ethanol is distilled at ' + 78 + ' °C; lead boils at ' + num(c.lead_boils_c.value) + ' °C' + src(c.lead_boils_c.source) + ', so it stays behind with the solids. ' + esc(c.per_bushel.text) + '.' + src(c.per_bushel.source) + ' The starch becomes fuel, so whatever lead the kernels held ends up about ' + c.ddgs_concentration_factor.value + ' times as concentrated in the distillers grains' + src(c.ddgs_concentration_factor.source) + ', which are sold as cattle and hog feed.</p>' +
+      '<ul class="rows small">' +
+        '<li><span>Corn grain, from ' + soil + ' ppm soil' + src(c.grain_to_soil_ratio.source) + '</span><span>' + e.grainLow.toFixed(2) + ' to ' + e.grainHigh.toFixed(2) + ' mg/kg</span></li>' +
+        '<li><span>Distillers grains made from it</span><span>' + e.ddgsLow.toFixed(2) + ' to ' + e.ddgsHigh.toFixed(2) + ' mg/kg</span></li>' +
+        '<li><span>EU limit for feed materials' + src(lim.eu_feed_material_mg_kg_12pct.source) + '</span><span>' + lim.eu_feed_material_mg_kg_12pct.value + ' mg/kg</span></li>' +
+        '<li><span>Ethanol fuel</span><span>none</span></li>' +
+      '</ul>' +
+      '<p class="small">' + esc(c.ddgs_measured.text) + '.' + src(c.ddgs_measured.source) + '</p>' +
+      '<div class="callout lead small"><p><b>Today\'s fallout and this year\'s corn:</b> ' + c.iowa_harvested_pct_nov15.value + '% of Iowa corn was harvested by Nov 15' + src(c.iowa_harvested_pct_nov15.source) + ', so most grain was in bins before the blast. Corn still standing could pick up dust on the husk; about ' + Math.round(c.foliar_to_grain_share.value * 100) + '% of lead landing on a cereal plant reaches the grain' + src(c.foliar_to_grain_share.source) + ', and at this stage likely less. Nearby plants: ' + c.plants_nearby.map(function (p) { return esc(p.text) + src(p.source); }).join('; ') + '.</p></div>';
+  }
+
+  // The farm counties around the plant and along the plume path.
+  function renderCounties() {
+    var cs = D.counties;
+    var tot = function (k) { return cs.reduce(function (a, c) { return a + (c[k] || 0); }, 0); };
+    var path = function (c) { return c.on_plume_path === 'plant' ? 'the plant' : c.on_plume_path === 'yes' ? 'yes' : c.on_plume_path === 'no' ? 'no' : esc(c.on_plume_path); };
+    cards.counties.innerHTML =
+      '<div class="eyebrow">Counties near the plant' + src(cs[0].source) + src('census-2022-cp-mo') + src(cs[0].cows_source) + '</div>' +
+      '<h2>' + num(tot('farms')) + ' farms in the nine counties nearest the blast</h2>' +
+      '<p class="small">USDA says about 350 farms in Iowa and Missouri lie in the projected plume' + src('aljazeera-350-farms') + ', but no agency has named them. These are the counties around the plant and along the Army\'s final southwest path toward Keokuk and Macon, plus the two the earlier forecast pointed at.</p>' +
+      '<div style="overflow-x:auto"><table class="inputs"><thead><tr><th>County</th><th>Farms</th><th>Hay acres</th><th>Cattle</th><th>Beef cows</th><th>Milk cows</th><th>Plume path</th></tr></thead><tbody>' +
+        cs.map(function (c) {
+          return '<tr><td>' + esc(c.name) + ', ' + esc(c.state) + (c.in_proclamation === 'yes' ? ' <span class="pill warn">proclamation</span>' : '') + '</td><td class="num">' + num(c.farms) + '</td><td class="num">' + num(c.hay_acres) + '</td><td class="num">' + num(c.cattle_head) + '</td><td class="num">' + (c.beef_cows == null ? 'n/a' : num(c.beef_cows)) + '</td><td class="num">' + (c.milk_cows == null ? 'n/a' : num(c.milk_cows)) + '</td><td>' + path(c) + '</td></tr>';
+        }).join('') +
+        '<tr><td><b>Total</b></td><td class="num"><b>' + num(tot('farms')) + '</b></td><td class="num"><b>' + num(tot('hay_acres')) + '</b></td><td class="num"><b>' + num(tot('cattle_head')) + '</b></td><td></td><td></td><td></td></tr>' +
+      '</tbody></table></div>' +
+      '<p class="small muted">Farms, hay and cattle from the 2022 Census of Agriculture; cows from USDA county estimates for Jan 1, 2024, where published (n/a means withheld or not listed). "Proclamation" marks the counties named in Iowa\'s disaster proclamation' + src('abc7-iaaap-2026') + '. The plume path is from the Army\'s forecast maps, not from sampling.</p>';
   }
 
   function renderContribute() {

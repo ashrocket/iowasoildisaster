@@ -30,6 +30,8 @@ runs the data check (`scripts/validate.js`) and the model tests (`test/model.tes
 | `data/farms.json` | Farm count, acres and livestock inventory |
 | `data/weather.json` | NOAA climate summary figures and the rainfall erosivity range |
 | `data/lead.json` | Soil lead survey, EPA soil levels, the Council Bluffs air monitor, deposition and manure figures |
+| `data/feed.json` | Hay, cattle and ethanol pathway inputs and feed and milk limits |
+| `data/counties.csv` | Farms, hay acres and cattle in the nine counties nearest the Nov 25 detonation |
 | `data/model.json` | Every model input, each with its source id |
 | `data/sources.json` | The source list. Every `source` field must name an id here |
 | `data/site.json` | The GitHub `owner/name`, used for the page's edit buttons |
@@ -73,6 +75,16 @@ pulse (mg/m²) = lead × share leaving the plant ÷ area it settles on
 ```
 
 The defaults are 25% leaving the plant (the Army cited a 1977 detonation that kept 75% on site) and an even spread over the 30 square miles where the Army expected the strongest effects. That gives about 10.4 mg/m², which the "In the Nov 25 detonation fallout zone" scenario adds to the plow layer in 2026. The page also shows tighter spreads and dust left on the top inch of untilled ground. These are estimates until EPA and Army sampling results are published, and replacing them with measured values is the most useful correction anyone can send.
+
+**Hay, cattle and ethanol.** Fallout on standing forage is
+
+```
+forage lead (mg/kg dry) = deposit (mg/m²) × 0.5 caught ÷ 0.24 kg/m² of forage, halving every 14 days
+                          + soil lead × (0.045 root uptake + 0.05 soil baled with hay)
+cow intake (mg/day)     = 12 kg forage × forage lead + 0.5 kg soil × soil lead
+```
+
+About 96% of what a cow eats leaves in manure on the same field; about 4% is absorbed, mostly into bone, then kidney and liver, with much less in muscle and milk. Milk lead is intake × 0.00023 L⁻¹ at steady state, so it is an upper bound for a cow kept on fresh fallout. Corn grain holds 0.1% to 0.3% of soil lead, and distillers grains about 3 times the grain. Lead does not distill, so ethanol fuel carries none. All of these are estimates; each input in `data/feed.json` names its source.
 
 The model leaves out gullies, wind erosion, tile drainage, rotations within a field, yield effects and plant uptake. It is for comparing crops and practices, not predicting a given field.
 

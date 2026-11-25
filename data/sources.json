@@ -1,28 +1,420 @@
 [
-  { "id": "nass-ia-2025", "title": "USDA NASS 2025 State Agriculture Overview for Iowa", "publisher": "USDA National Agricultural Statistics Service", "url": "https://www.nass.usda.gov/Quick_Stats/Ag_Overview/stateOverview.php?state=IOWA", "accessed": "2026-11-25", "note": "Quick Stats data as of Oct 27, 2026" },
-  { "id": "noaa-ia-summary", "title": "Iowa State Climate Summary (2025 edition)", "publisher": "NOAA / NC Institute for Climate Studies", "url": "https://statesummaries.ncics.org/chapter/ia/", "accessed": "2026-11-25" },
-  { "id": "isu-usle-1967", "title": "Erosion control factors for the soil loss equation", "publisher": "Iowa State University Extension, 1967", "url": "https://publications.iowa.gov/47994/1/erosion_control_factors_soil_lost_equation_1967_OCR_.pdf", "accessed": "2026-11-25" },
-  { "id": "alberts-1985", "title": "Alberts, Wendt and Burwell (1985), corn and soybean cropping effects on soil losses and C factors", "publisher": "Soil Science Society of America Journal 49:721-728 (USDA ARS)", "url": "https://ars.usda.gov/ARSUserFiles/50701000/cswq-t5595-alberts.pdf", "accessed": "2026-11-25", "note": "Missouri claypan plots; C values adjusted to Handbook 537. Iowa-measured values would be better." },
-  { "id": "ewg-losing-ground", "title": "Losing Ground (Iowa Daily Erosion Project and NRI figures)", "publisher": "Environmental Working Group, 2010", "url": "https://ewg.org/losingground/losing-ground-report.html", "accessed": "2026-11-25" },
-  { "id": "nrcs-nri-2017", "title": "2017 National Resources Inventory Summary Report", "publisher": "USDA NRCS, 2020", "url": "https://www.nrcs.usda.gov/sites/default/files/2022-10/2017NRISummary_Final.pdf", "accessed": "2026-11-25" },
-  { "id": "dep", "title": "Daily Erosion Project", "publisher": "Iowa State University and partners", "url": "https://www.dailyerosion.org/", "accessed": "2026-11-25" },
-  { "id": "epa-usgs-soil-lead", "title": "USGS Background Soil-Lead Survey: State Data (Iowa)", "publisher": "US EPA", "url": "https://www.epa.gov/superfund/usgs-background-soil-lead-survey-state-data", "accessed": "2026-11-25" },
-  { "id": "usgs-sir-2017-5118", "title": "Geochemical and mineralogical maps for soils of the conterminous United States: lead", "publisher": "USGS Scientific Investigations Report 2017-5118", "url": "https://pubs.usgs.gov/sir/2017/5118/elements/Lead/Pb_txt.html", "accessed": "2026-11-25" },
-  { "id": "iowa-igs-ofr-10-1", "title": "The Iowa State-Wide Trace Element Soil Sampling Project (Open-File Report 10-1)", "publisher": "Iowa Geological and Water Survey, 2010", "url": "https://publications.iowa.gov/25773/1/2014-08-24_08-08-51_ofr-2010-1.pdf", "accessed": "2026-11-25" },
-  { "id": "epa-soil-lead-directive", "title": "Residential soil lead directive for CERCLA sites and RCRA cleanups", "publisher": "US EPA, Oct 16, 2025", "url": "https://www.epa.gov/superfund/residential-soil-lead-directive-cercla-sites-and-rcra-hazardous-waste-cleanup-facilities", "accessed": "2026-11-25" },
-  { "id": "iadnr-lead-dv-2025", "title": "Iowa Lead Monitoring Design Value 2023-2025", "publisher": "Iowa DNR", "url": "https://www.iowadnr.gov/media/9739/download", "accessed": "2026-11-25" },
-  { "id": "iadnr-network-assessment", "title": "Iowa ambient air monitoring network assessment", "publisher": "Iowa DNR", "url": "https://www.iowadnr.gov/media/8581/download", "accessed": "2026-11-25" },
-  { "id": "iadnr-lead-fact", "title": "Lead Fact Sheet", "publisher": "Iowa DNR, 2018", "url": "https://www.iowadnr.gov/media/2642/download", "accessed": "2026-11-25" },
-  { "id": "sierra-ia-lead", "title": "Understanding Air Pollution from Lead", "publisher": "Sierra Club Iowa Chapter", "url": "https://www.sierraclub.org/sites/default/files/2023-07/LeadAirPollution.pdf", "accessed": "2026-11-25" },
-  { "id": "epa-lead-air", "title": "Basic information about lead air pollution", "publisher": "US EPA", "url": "https://www.epa.gov/lead-air-pollution/basic-information-about-lead-air-pollution", "accessed": "2026-11-25" },
-  { "id": "usgs-champaign-pb", "title": "Zhang (2003), 100 years of Pb deposition and transport in soils in Champaign, Illinois", "publisher": "Water, Air, and Soil Pollution 146 (USGS record)", "url": "https://pubs.usgs.gov/publication/70026091", "accessed": "2026-11-25" },
-  { "id": "kaste-richardson-2014", "title": "Richardson et al. (2014), lead in northeastern US forest floors", "publisher": "Journal of Environmental Quality 43:926-935", "url": "https://www.wm.edu/as/geology/documents/facultypubs/kaste/richardson_jeq_2014.pdf", "accessed": "2026-11-25" },
-  { "id": "mcbride-spiers-2001", "title": "McBride and Spiers (2001), trace elements in fertilizers and dairy manures", "publisher": "Communications in Soil Science and Plant Analysis 32(1)", "url": "https://agris.fao.org/search/en/records/65defb0cb766d82b18ffa070", "accessed": "2026-11-25" },
-  { "id": "sdsu-swine-metals", "title": "Heavy Metals in Swine Manure (P-00385)", "publisher": "South Dakota State University Extension, 2026", "url": "https://extension.sdstate.edu/sites/default/files/2026-03/P-00385.pdf", "accessed": "2026-11-25" },
-  { "id": "cbs-iaaap-2026", "title": "Army detonates unstable lead explosives at Iowa munitions plant despite community concerns", "publisher": "CBS News, Nov 25, 2026", "url": "https://www.cbsnews.com/news/iowa-army-ammunition-plant-unstable-explosives-detonation/", "accessed": "2026-11-25" },
-  { "id": "cbs-chicago-iaaap-2026", "title": "Army lead azide detonation in Iowa: toxic dust plume", "publisher": "CBS Chicago, Nov 19, 2026", "url": "https://www.cbsnews.com/chicago/news/army-lead-azide-detonation-iowa-toxic-dust-plume/", "accessed": "2026-11-25", "note": "Written for the earlier Nov 20 and Nov 23 dates" },
-  { "id": "abc7-iaaap-2026", "title": "US Army plans lead azide explosion at Middletown, Iowa ammunition plant (live updates)", "publisher": "ABC7 Chicago, updated Nov 24, 2026", "url": "https://abc7chicago.com/live-updates/us-army-plans-lead-azide-explosion-middleton-iowa-ammunition-plant-how-potential-plume-could-affect-illinois-live-updates/20076007/", "accessed": "2026-11-25" },
-  { "id": "iowa-hhs-iaaap-2026", "title": "Update: Planned Lead Azide Detonation, Public Health Guidance and Recommended Protective Actions", "publisher": "Iowa Health and Human Services, Nov 24, 2026", "url": "https://hhs.iowa.gov/media/19822/download", "accessed": "2026-11-25" },
-  { "id": "epa-iaaap-notice", "title": "Public Notice: Iowa Army Ammunition Plant, Middletown, Iowa", "publisher": "US EPA Region 7", "url": "https://www.epa.gov/node/299851", "accessed": "2026-11-25", "note": "Emergency storage permit for the degraded lead azide; gives the plant's Des Moines County address" },
-  { "id": "assumption", "title": "Model assumption", "publisher": "This project", "url": "", "accessed": "", "note": "A placeholder value. A pull request with a better source is welcome." }
+ {
+  "id": "nass-ia-2025",
+  "title": "USDA NASS 2025 State Agriculture Overview for Iowa",
+  "publisher": "USDA National Agricultural Statistics Service",
+  "url": "https://www.nass.usda.gov/Quick_Stats/Ag_Overview/stateOverview.php?state=IOWA",
+  "accessed": "2026-11-25",
+  "note": "Quick Stats data as of Oct 27, 2026"
+ },
+ {
+  "id": "noaa-ia-summary",
+  "title": "Iowa State Climate Summary (2025 edition)",
+  "publisher": "NOAA / NC Institute for Climate Studies",
+  "url": "https://statesummaries.ncics.org/chapter/ia/",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "isu-usle-1967",
+  "title": "Erosion control factors for the soil loss equation",
+  "publisher": "Iowa State University Extension, 1967",
+  "url": "https://publications.iowa.gov/47994/1/erosion_control_factors_soil_lost_equation_1967_OCR_.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "alberts-1985",
+  "title": "Alberts, Wendt and Burwell (1985), corn and soybean cropping effects on soil losses and C factors",
+  "publisher": "Soil Science Society of America Journal 49:721-728 (USDA ARS)",
+  "url": "https://ars.usda.gov/ARSUserFiles/50701000/cswq-t5595-alberts.pdf",
+  "accessed": "2026-11-25",
+  "note": "Missouri claypan plots; C values adjusted to Handbook 537. Iowa-measured values would be better."
+ },
+ {
+  "id": "ewg-losing-ground",
+  "title": "Losing Ground (Iowa Daily Erosion Project and NRI figures)",
+  "publisher": "Environmental Working Group, 2010",
+  "url": "https://ewg.org/losingground/losing-ground-report.html",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "nrcs-nri-2017",
+  "title": "2017 National Resources Inventory Summary Report",
+  "publisher": "USDA NRCS, 2020",
+  "url": "https://www.nrcs.usda.gov/sites/default/files/2022-10/2017NRISummary_Final.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "dep",
+  "title": "Daily Erosion Project",
+  "publisher": "Iowa State University and partners",
+  "url": "https://www.dailyerosion.org/",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "epa-usgs-soil-lead",
+  "title": "USGS Background Soil-Lead Survey: State Data (Iowa)",
+  "publisher": "US EPA",
+  "url": "https://www.epa.gov/superfund/usgs-background-soil-lead-survey-state-data",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "usgs-sir-2017-5118",
+  "title": "Geochemical and mineralogical maps for soils of the conterminous United States: lead",
+  "publisher": "USGS Scientific Investigations Report 2017-5118",
+  "url": "https://pubs.usgs.gov/sir/2017/5118/elements/Lead/Pb_txt.html",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "iowa-igs-ofr-10-1",
+  "title": "The Iowa State-Wide Trace Element Soil Sampling Project (Open-File Report 10-1)",
+  "publisher": "Iowa Geological and Water Survey, 2010",
+  "url": "https://publications.iowa.gov/25773/1/2014-08-24_08-08-51_ofr-2010-1.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "epa-soil-lead-directive",
+  "title": "Residential soil lead directive for CERCLA sites and RCRA cleanups",
+  "publisher": "US EPA, Oct 16, 2025",
+  "url": "https://www.epa.gov/superfund/residential-soil-lead-directive-cercla-sites-and-rcra-hazardous-waste-cleanup-facilities",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "iadnr-lead-dv-2025",
+  "title": "Iowa Lead Monitoring Design Value 2023-2025",
+  "publisher": "Iowa DNR",
+  "url": "https://www.iowadnr.gov/media/9739/download",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "iadnr-network-assessment",
+  "title": "Iowa ambient air monitoring network assessment",
+  "publisher": "Iowa DNR",
+  "url": "https://www.iowadnr.gov/media/8581/download",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "iadnr-lead-fact",
+  "title": "Lead Fact Sheet",
+  "publisher": "Iowa DNR, 2018",
+  "url": "https://www.iowadnr.gov/media/2642/download",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "sierra-ia-lead",
+  "title": "Understanding Air Pollution from Lead",
+  "publisher": "Sierra Club Iowa Chapter",
+  "url": "https://www.sierraclub.org/sites/default/files/2023-07/LeadAirPollution.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "epa-lead-air",
+  "title": "Basic information about lead air pollution",
+  "publisher": "US EPA",
+  "url": "https://www.epa.gov/lead-air-pollution/basic-information-about-lead-air-pollution",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "usgs-champaign-pb",
+  "title": "Zhang (2003), 100 years of Pb deposition and transport in soils in Champaign, Illinois",
+  "publisher": "Water, Air, and Soil Pollution 146 (USGS record)",
+  "url": "https://pubs.usgs.gov/publication/70026091",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "kaste-richardson-2014",
+  "title": "Richardson et al. (2014), lead in northeastern US forest floors",
+  "publisher": "Journal of Environmental Quality 43:926-935",
+  "url": "https://www.wm.edu/as/geology/documents/facultypubs/kaste/richardson_jeq_2014.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "mcbride-spiers-2001",
+  "title": "McBride and Spiers (2001), trace elements in fertilizers and dairy manures",
+  "publisher": "Communications in Soil Science and Plant Analysis 32(1)",
+  "url": "https://agris.fao.org/search/en/records/65defb0cb766d82b18ffa070",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "sdsu-swine-metals",
+  "title": "Heavy Metals in Swine Manure (P-00385)",
+  "publisher": "South Dakota State University Extension, 2026",
+  "url": "https://extension.sdstate.edu/sites/default/files/2026-03/P-00385.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "cbs-iaaap-2026",
+  "title": "Army detonates unstable lead explosives at Iowa munitions plant despite community concerns",
+  "publisher": "CBS News, Nov 25, 2026",
+  "url": "https://www.cbsnews.com/news/iowa-army-ammunition-plant-unstable-explosives-detonation/",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "cbs-chicago-iaaap-2026",
+  "title": "Army lead azide detonation in Iowa: toxic dust plume",
+  "publisher": "CBS Chicago, Nov 19, 2026",
+  "url": "https://www.cbsnews.com/chicago/news/army-lead-azide-detonation-iowa-toxic-dust-plume/",
+  "accessed": "2026-11-25",
+  "note": "Written for the earlier Nov 20 and Nov 23 dates"
+ },
+ {
+  "id": "abc7-iaaap-2026",
+  "title": "US Army plans lead azide explosion at Middletown, Iowa ammunition plant (live updates)",
+  "publisher": "ABC7 Chicago, updated Nov 24, 2026",
+  "url": "https://abc7chicago.com/live-updates/us-army-plans-lead-azide-explosion-middleton-iowa-ammunition-plant-how-potential-plume-could-affect-illinois-live-updates/20076007/",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "iowa-hhs-iaaap-2026",
+  "title": "Update: Planned Lead Azide Detonation, Public Health Guidance and Recommended Protective Actions",
+  "publisher": "Iowa Health and Human Services, Nov 24, 2026",
+  "url": "https://hhs.iowa.gov/media/19822/download",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "epa-iaaap-notice",
+  "title": "Public Notice: Iowa Army Ammunition Plant, Middletown, Iowa",
+  "publisher": "US EPA Region 7",
+  "url": "https://www.epa.gov/node/299851",
+  "accessed": "2026-11-25",
+  "note": "Emergency storage permit for the degraded lead azide; gives the plant's Des Moines County address"
+ },
+ {
+  "id": "abc-iaaap-blast",
+  "title": "Army detonates lead azide at Iowa Army Ammunition Plant",
+  "publisher": "ABC News, Nov 25, 2026",
+  "url": "https://abcnews.com/US/iowa-detonation-lead-azide-army/story?id=138425051",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "epa-air-zero-2026",
+  "title": "Initial air monitoring shows zero detection of airborne lead following controlled detonation",
+  "publisher": "US EPA news release, Nov 25, 2026",
+  "url": "https://www.epa.gov/newsreleases/initial-air-monitoring-shows-zero-detection-airborne-lead-following-controlled",
+  "accessed": "2026-11-25",
+  "note": "Gives no concentrations or detection limits"
+ },
+ {
+  "id": "ipr-iaaap-contours",
+  "title": "Army lead detonation: public health and safety risks",
+  "publisher": "Iowa Public Radio, Nov 19, 2026",
+  "url": "https://www.iowapublicradio.org/environment/2026-11-19/army-lead-detonation-public-health-safety-risks",
+  "accessed": "2026-11-25",
+  "note": "Army modeled deposition contours of 5 and 100 micrograms per square foot"
+ },
+ {
+  "id": "aljazeera-350-farms",
+  "title": "US Army detonates toxic lead stockpile in Iowa amid backlash",
+  "publisher": "Al Jazeera, Nov 25, 2026",
+  "url": "https://www.aljazeera.com/news/2026/11/25/us-army-detonates-toxic-lead-stockpile-in-iowa-amid-backlash",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "idals-livestock-2026",
+  "title": "Guidance for Middletown livestock producers",
+  "publisher": "Iowa Department of Agriculture and Land Stewardship",
+  "url": "https://iowaagriculture.gov/news/guidance-middletown-livestock-producers",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "iadnr-iaaap-profile",
+  "title": "Iowa Army Ammunition Plant site profile",
+  "publisher": "Iowa DNR",
+  "url": "https://iowadnr.gov/media/3020/download",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "epa-npl-iaaap",
+  "title": "NPL site narrative: Iowa Army Ammunition Plant",
+  "publisher": "US EPA",
+  "url": "https://semspub.epa.gov/src/document/07/30296138",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "census-2022-cp-ia",
+  "title": "2022 Census of Agriculture county profiles: Des Moines, Lee, Henry, Louisa, Van Buren (Iowa)",
+  "publisher": "USDA NASS",
+  "url": "https://www.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/County_Profiles/Iowa/cp19057.pdf",
+  "accessed": "2026-11-25",
+  "note": "Link is Des Moines County; the others are cp19111, cp19087, cp19115 and cp19177"
+ },
+ {
+  "id": "census-2022-cp-mo",
+  "title": "2022 Census of Agriculture county profiles: Clark, Scotland, Knox (Missouri)",
+  "publisher": "USDA NASS",
+  "url": "https://www.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/County_Profiles/Missouri/cp29103.pdf",
+  "accessed": "2026-11-25",
+  "note": "Link is Knox County; Clark is cp29045 and Scotland cp29199"
+ },
+ {
+  "id": "census-2022-mo-tables",
+  "title": "2022 Census of Agriculture, Missouri county tables 1 and 26 (Adair County)",
+  "publisher": "USDA NASS",
+  "url": "https://nass.usda.gov/Publications/AgCensus/2022/Full_Report/Volume_1,_Chapter_2_County_Level/Missouri/st29_2_001_001.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "nass-ia-cattle-2024",
+  "title": "Iowa county cattle estimates, Jan 1, 2024",
+  "publisher": "USDA NASS",
+  "url": "https://data.nass.usda.gov/Statistics_by_State/Iowa/Publications/County_Estimates/2024/IA-CtyEst-Cattle-05-24.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "nass-mo-cattle-2024",
+  "title": "Missouri cattle county estimates, Jan 1, 2024",
+  "publisher": "USDA NASS",
+  "url": "https://data-origin.nass.usda.gov/Statistics_by_State/Missouri/Publications/County_Estimates/2024/20240513-MO-Cattle-County-Estimates.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "nass-crop-progress-1115",
+  "title": "Crop Progress, week ending Nov 15, 2026",
+  "publisher": "USDA NASS",
+  "url": "https://esmis.nal.usda.gov/sites/default/release-files/796149/prog4626.txt",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "hhrap-2005-ch5",
+  "title": "Human Health Risk Assessment Protocol, Chapter 5: plant interception and weathering defaults",
+  "publisher": "US EPA, 2005",
+  "url": "https://yosemite.epa.gov/oa/EAB_Web_Docket.nsf/Filings%20By%20Appeal%20Number/97B3070324C915C685257BC7006DE728/$File/Response%20Attachment%209%20Chpt.%205%20...6.30.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "iaea-trs472",
+  "title": "Handbook of parameter values for the prediction of radionuclide transfer (TRS-472)",
+  "publisher": "IAEA, 2010 (NRC copy)",
+  "url": "https://www.nrc.gov/docs/ML1218/ML12185A048.pdf",
+  "accessed": "2026-11-25",
+  "note": "Used for interception of particles and foliar-to-grain transfer"
+ },
+ {
+  "id": "baes-1984",
+  "title": "Baes et al. (1984), soil-to-plant concentration factors (ORNL-5786)",
+  "publisher": "Oak Ridge National Laboratory",
+  "url": "https://corpora.tika.apache.org/base/docs/govdocs1/215/215305.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "umn-hay-ash",
+  "title": "Hay rake type impacts ash content of hay",
+  "publisher": "University of Minnesota Extension",
+  "url": "https://extension.umn.edu/forage-harvest-and-storage/hay-rake-type-impacts-ash-content-hay",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "unl-beef-dmi",
+  "title": "Forage consumed per day by beef cows",
+  "publisher": "University of Nebraska-Lincoln Beef",
+  "url": "https://beef.unl.edu/cattleproduction/forageconsumed-day",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "howard-2016",
+  "title": "Howard et al. (2016), absorption and milk transfer of elements in ruminants",
+  "publisher": "Scientific Reports (NERC copy)",
+  "url": "https://nora.nerc.ac.uk/id/eprint/515150/1/N515150JA.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "howard-2017-milk",
+  "title": "Howard et al. (2017), transfer of elements to cow milk",
+  "publisher": "MODARIA (CORE copy)",
+  "url": "https://core.ac.uk/download/76972993.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "oehha-2012-appk",
+  "title": "Air Toxics Hot Spots, Appendix K: transfer to animal tissues",
+  "publisher": "California OEHHA, 2012",
+  "url": "https://calenviroscreen.oehha.ca.gov/sites/default/files/media/downloads/crnr/appendixk2012.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "merck-vet-lead",
+  "title": "Lead poisoning in animals",
+  "publisher": "Merck Veterinary Manual",
+  "url": "https://www.merckvetmanual.com/toxicology/lead-poisoning/lead-poisoning-in-animals",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "nrc-2005-via-extension",
+  "title": "Mineral tolerance of dairy cattle (citing NRC 2005 Mineral Tolerance of Animals)",
+  "publisher": "eXtension Dairy Cattle, W. P. Weiss",
+  "url": "https://dairy-cattle.extension.org/?p=734",
+  "accessed": "2026-11-25",
+  "note": "Secondary source for the NRC limit"
+ },
+ {
+  "id": "eu-2002-32",
+  "title": "Directive 2002/32/EC on undesirable substances in animal feed, Annex I",
+  "publisher": "legislation.gov.uk copy",
+  "url": "https://www.legislation.gov.uk/eudr/2002/32/annexes?timeline=false",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "codex-milk-lead",
+  "title": "ASEAN standards for contaminants (Codex maximum level for lead in milk)",
+  "publisher": "ASEAN",
+  "url": "https://asean.org/wp-content/uploads/2022/03/ANNEX-II-ASEAN-Standards-for-Contaminants-Toxins-as-of-34PFPWG.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "li-2014-corn",
+  "title": "Li et al. (2014), lead uptake by maize grain across soils",
+  "publisher": "PLoS ONE",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3885748/",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "ahdb-pr581",
+  "title": "DDGS quality report PR581: elements concentrate about 3-fold in DDGS",
+  "publisher": "AHDB / Queen's University Belfast, 2017",
+  "url": "https://projectblue.blob.core.windows.net/media/Default/Research%20Papers/Cereals%20and%20Oilseed/pr581-ddgs-wp6-final-report.pdf",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "meric-koc-2021",
+  "title": "Meriç and Koç (2021), heavy metals in imported US corn DDGS",
+  "publisher": "DergiPark",
+  "url": "https://dergipark.org.tr/tr/download/article-file/1754056",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "extension-ethanol-yield",
+  "title": "Corn for biofuel production",
+  "publisher": "Farm Energy, eXtension",
+  "url": "https://farm-energy.extension.org/corn-for-biofuel-production/",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "rsc-lead",
+  "title": "Lead: element properties",
+  "publisher": "Royal Society of Chemistry",
+  "url": "https://periodic-table.rsc.org/element/82",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "big-river-ethanol",
+  "title": "Big River Resources Iowa ethanol plant comes on line",
+  "publisher": "Industrial Info Resources",
+  "url": "https://www.industrialinfo.com/news/article/big-river-resources-iowa-ethanol-plant-comes-on-line-fifteen-plants-in-the-state-capable-of-720-mill--42277",
+  "accessed": "2026-11-25",
+  "note": "West Burlington, Des Moines County"
+ },
+ {
+  "id": "poet-macon",
+  "title": "POET Bioprocessing, Macon",
+  "publisher": "POET",
+  "url": "https://poet.com/macon",
+  "accessed": "2026-11-25"
+ },
+ {
+  "id": "assumption",
+  "title": "Model assumption",
+  "publisher": "This project",
+  "url": "",
+  "accessed": "",
+  "note": "A placeholder value. A pull request with a better source is welcome."
+ }
 ]

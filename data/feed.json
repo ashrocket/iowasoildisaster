@@ -1,0 +1,162 @@
+{
+  "notes": "Inputs for the hay, cattle and ethanol pathway. Each names a source id, or says assumption. A late-November cow on fallout-zone pasture is the case modeled; stored hay, housed cattle and corn already in bins get far less.",
+  "forage": {
+    "interception_fraction": {
+      "value": 0.5,
+      "source": "hhrap-2005-ch5",
+      "note": "Share of falling dust caught by standing forage (EPA default for forage). Coarse explosion debris is caught less"
+    },
+    "standing_biomass_kg_m2": {
+      "value": 0.24,
+      "source": "hhrap-2005-ch5",
+      "note": "EPA default pasture yield; dormant November pasture holds less, which raises the concentration slightly"
+    },
+    "weathering_half_life_days": {
+      "value": 14,
+      "source": "hhrap-2005-ch5",
+      "note": "Rain and wind wash half the deposit off leaves in about two weeks (10 to 20 days in the literature)"
+    },
+    "soil_to_forage_ratio": {
+      "value": 0.045,
+      "source": "baes-1984",
+      "note": "Lead in plant (dry) over lead in soil (dry), forage"
+    },
+    "soil_on_hay_share": {
+      "value": 0.05,
+      "source": "umn-hay-ash",
+      "note": "Soil carried on baled hay, 3.4% to 6.6% by weight depending on the rake"
+    }
+  },
+  "bale": {
+    "footprint_m2": {
+      "value": 2.3,
+      "source": "assumption",
+      "note": "Top view of a 5 by 5 foot round bale, the area dust falls on"
+    },
+    "dry_matter_kg": {
+      "value": 460,
+      "source": "assumption",
+      "note": "A 1,200 lb round bale at about 85% dry matter"
+    }
+  },
+  "cow": {
+    "dry_matter_intake_kg_day": {
+      "value": 12,
+      "source": "unl-beef-dmi",
+      "note": "About 2.2% of body weight for a 1,200 lb beef cow on average forage"
+    },
+    "soil_eaten_kg_day": {
+      "value": 0.5,
+      "source": "hhrap-2005-ch5",
+      "note": "EPA default for beef cattle; grazing studies find 0.1 to 1.5 kg a day"
+    },
+    "absorbed_share": {
+      "value": 0.04,
+      "source": "howard-2016",
+      "note": "Ruminants absorb about 4% of the lead they eat (under 2% to 15% in other sources); the rest leaves in manure"
+    },
+    "milk_transfer_d_per_l": {
+      "value": 0.00023,
+      "source": "howard-2017-milk",
+      "note": "Milk lead (mg/L) per mg eaten each day, at steady state"
+    },
+    "tissue_rank": [
+      {
+        "tissue": "Bone",
+        "value": 0.02,
+        "note": "long-term store, released slowly for months to years"
+      },
+      {
+        "tissue": "Kidney",
+        "value": 0.014
+      },
+      {
+        "tissue": "Liver",
+        "value": 0.0048
+      },
+      {
+        "tissue": "Muscle (beef)",
+        "value": 0.0003
+      },
+      {
+        "tissue": "Milk",
+        "value": 5.9e-05
+      }
+    ],
+    "tissue_rank_unit": "mg/kg fresh tissue per mg eaten each day, at steady state",
+    "tissue_rank_source": "oehha-2012-appk",
+    "blood_half_life_days": {
+      "value": 63,
+      "source": "merck-vet-lead",
+      "note": "Merck gives 9 days to several months; herd studies find a median near 2 months"
+    }
+  },
+  "limits": {
+    "nrc_max_diet_mg_kg_dm": {
+      "value": 100,
+      "source": "nrc-2005-via-extension",
+      "note": "Maximum tolerable lead in a cattle diet, dry matter"
+    },
+    "eu_forage_mg_kg_12pct": {
+      "value": 30,
+      "source": "eu-2002-32",
+      "note": "EU maximum for lead in forage (hay, silage, grass) at 12% moisture"
+    },
+    "eu_feed_material_mg_kg_12pct": {
+      "value": 10,
+      "source": "eu-2002-32",
+      "note": "EU maximum for feed materials such as distillers grains"
+    },
+    "codex_milk_mg_kg": {
+      "value": 0.02,
+      "source": "codex-milk-lead",
+      "note": "Codex maximum level for lead in milk"
+    }
+  },
+  "corn": {
+    "grain_to_soil_ratio": {
+      "low": 0.001,
+      "high": 0.003,
+      "source": "li-2014-corn",
+      "note": "Lead in grain over lead in soil, 17 soils"
+    },
+    "foliar_to_grain_share": {
+      "value": 0.02,
+      "source": "iaea-trs472",
+      "note": "Share of lead landing on a cereal plant that moves into the grain (0.2% to 8.2%)"
+    },
+    "ddgs_concentration_factor": {
+      "value": 3,
+      "source": "ahdb-pr581",
+      "note": "Starch becomes ethanol, so what stays in distillers grains is about 3 times as concentrated"
+    },
+    "ddgs_measured": {
+      "text": "50 of 52 US corn DDGS samples had lead below 1 mg/kg; the other two had 1.0 and 1.2",
+      "source": "meric-koc-2021"
+    },
+    "per_bushel": {
+      "text": "A bushel makes about 2.8 gallons of ethanol and 17 lb of distillers grains",
+      "source": "extension-ethanol-yield"
+    },
+    "lead_boils_c": {
+      "value": 1749,
+      "source": "rsc-lead",
+      "note": "Ethanol boils at 78 °C, so lead does not distill over with it"
+    },
+    "iowa_harvested_pct_nov15": {
+      "value": 84,
+      "source": "nass-crop-progress-1115",
+      "note": "Statewide; reports say harvest near the plant was largely done"
+    },
+    "plants_nearby": [
+      {
+        "text": "Big River Resources, West Burlington (Des Moines County)",
+        "source": "big-river-ethanol"
+      },
+      {
+        "text": "POET, Macon, Missouri, just south of Adair County",
+        "source": "poet-macon"
+      }
+    ]
+  }
+}
