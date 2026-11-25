@@ -1,0 +1,42 @@
+{
+  "soil_background_iowa_mg_kg": {
+    "samples": 91, "mean": 23.1, "median": 21.7, "min": 8.4, "p95": 35.0, "max": 48.5,
+    "years": "2007-2010", "note": "Geogenic surface soil samples",
+    "source": "epa-usgs-soil-lead"
+  },
+  "soil_national_medians_mg_kg": {
+    "top_0_5cm": 18.1, "a_horizon": 17.8, "c_horizon": 14.9,
+    "source": "usgs-sir-2017-5118"
+  },
+  "screening_levels_ppm": {
+    "residential_screening": 200, "residential_removal": 600,
+    "issued": "2025-10-16", "source": "epa-soil-lead-directive"
+  },
+  "air_monitor": {
+    "site": "Griffin Pipe, Council Bluffs (Pottawattamie County)",
+    "aqs_id": "19-155-0011",
+    "max_rolling_3mo_ug_m3": [
+      { "year": 2023, "value": 0.06 },
+      { "year": 2024, "value": 0.11 },
+      { "year": 2025, "value": 0.11 }
+    ],
+    "design_value_2023_2025": 0.11,
+    "naaqs_ug_m3": 0.15,
+    "source": "iadnr-lead-dv-2025"
+  },
+  "history": [
+    { "text": "Council Bluffs was out of attainment for lead; its monitor exceeded the standard six times in 2010.", "source": "sierra-ia-lead" },
+    { "text": "EPA fined Griffin Pipe $950,000 over lead emissions; the plant closed in 2014.", "source": "sierra-ia-lead" },
+    { "text": "Iowa DNR reports no Iowa facility now emits over 0.5 tons of lead a year.", "source": "iadnr-network-assessment" },
+    { "text": "Leaded aviation fuel for piston-engine aircraft is a remaining national source of airborne lead.", "source": "epa-lead-air" }
+  ],
+  "deposition_reference": [
+    { "place": "Champaign, IL (Morrow Plots)", "value_mg_m2_yr": 270, "when": "peak around 1940", "source": "usgs-champaign-pb" },
+    { "place": "Northeastern US forests", "value_mg_m2_yr": 35, "when": "late 1970s", "source": "kaste-richardson-2014" },
+    { "place": "Northeastern US forests", "value_mg_m2_yr": 0.65, "when": "mid-1990s", "source": "kaste-richardson-2014" }
+  ],
+  "manure_pb_mg_kg_dry": [
+    { "type": "Dairy manure", "value": 4.3, "note": "highest sample", "source": "mcbride-spiers-2001" },
+    { "type": "Swine manure", "value": 5.7, "note": "fresh, rising to 7.9 during composting", "source": "sdsu-swine-metals" }
+  ]
+}

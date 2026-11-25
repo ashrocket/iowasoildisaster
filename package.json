@@ -1,0 +1,11 @@
+{
+  "name": "iowa-soil-ledger",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Iowa crops, lead and weather data with a ten-year soil outlook, on one zoomable canvas.",
+  "scripts": {
+    "check": "node scripts/validate.js",
+    "test": "node scripts/validate.js && node --test",
+    "start": "npx serve ."
+  }
+}

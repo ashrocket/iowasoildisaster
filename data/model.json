@@ -1,0 +1,44 @@
+{
+  "start_year": 2026,
+  "end_year": 2035,
+  "base_year": 2025,
+  "notes": "Every value here is an input to model.js. Each one names a source id from sources.json, or says assumption. Change a value with a pull request and say why.",
+  "erosion": {
+    "R": { "value": 180, "unit": "hundreds of ft-tonf-in/(ac-h-yr)", "note": "Iowa ranges 160 to 200; 180 is the middle (Jasper County)", "source": "isu-usle-1967" },
+    "K": { "value": 0.32, "note": "Tama silty clay loam, a common loess soil", "source": "isu-usle-1967" },
+    "LS": { "value": 1.0, "note": "Representative statewide slope factor, chosen so a corn and soybean rotation under reduced tillage lands near the measured Iowa average of 4.7 to 5.2 tons/acre/yr", "source": "assumption" },
+    "P": { "value": 1.0, "note": "No contouring or terraces", "source": "assumption" },
+    "T": { "value": 5, "unit": "tons/acre/yr", "note": "Soil loss tolerance for most Iowa soils", "source": "ewg-losing-ground" },
+    "R_trend_options": [
+      { "id": "steady", "label": "Steady rain", "per_year": 0 },
+      { "id": "plus05", "label": "+0.5% a year", "per_year": 0.005 },
+      { "id": "plus1", "label": "+1% a year", "per_year": 0.01 }
+    ],
+    "R_trend_note": "Assumption. NOAA reports more 2-inch rain days (1.5 a year long-term, 2.2 in 2015-2019) and projects heavier extremes, but gives no erosivity trend. The options bracket that.",
+    "R_trend_source": "noaa-ia-summary"
+  },
+  "soil": {
+    "bulk_density_g_cm3": { "value": 1.33, "source": "assumption", "note": "Typical silt loam topsoil" },
+    "plow_layer_in": { "value": 8, "source": "iowa-igs-ofr-10-1", "note": "Matches the 0-8 inch shallow samples in Iowa's trace element survey" },
+    "subsoil_pb_mg_kg": { "value": 14.9, "source": "usgs-sir-2017-5118", "note": "National C horizon median; Iowa's own deep-sample figure would be better" }
+  },
+  "lead_inputs": {
+    "deposition_velocity_cm_s": { "value": 0.5, "source": "assumption", "note": "Typical dry deposition speed for fine particles" },
+    "background_deposition_mg_m2_yr": { "value": 0.65, "source": "kaste-richardson-2014", "note": "Mid-1990s northeastern US rate, likely higher than rural Iowa today" },
+    "manure_pb_mg_kg_dry": { "value": 5.7, "source": "sdsu-swine-metals" },
+    "manure_rate_dry_tons_ac_yr": { "value": 3, "source": "assumption", "note": "Only used in the manured field scenario" },
+    "scenarios": [
+      { "id": "background", "label": "Typical field", "air_ug_m3": 0, "manure": false },
+      { "id": "nearsource", "label": "Beside the Council Bluffs monitor", "air_ug_m3": 0.11, "manure": false },
+      { "id": "manured", "label": "Typical field, swine manure", "air_ug_m3": 0, "manure": true }
+    ]
+  },
+  "crops": {
+    "corn_grain":  { "C": { "conventional": 0.12, "reduced": 0.06, "notill": 0.02 }, "source": "alberts-1985", "color": "corn" },
+    "soybeans":    { "C": { "conventional": 0.25, "reduced": 0.09, "notill": 0.03 }, "source": "alberts-1985", "color": "soy" },
+    "corn_silage": { "C": { "conventional": 0.24, "reduced": 0.12, "notill": 0.04 }, "source": "assumption", "note": "Twice corn grain, because silage takes the residue off the field", "color": "silage" },
+    "oats":        { "C": { "conventional": 0.10, "reduced": 0.08, "notill": 0.05 }, "source": "assumption", "note": "Small grain cover between row crop and meadow", "color": "oats" },
+    "alfalfa":     { "C": { "conventional": 0.01, "reduced": 0.01, "notill": 0.01 }, "source": "assumption", "note": "Established perennial meadow; not tilled", "color": "hay" },
+    "other_hay":   { "C": { "conventional": 0.01, "reduced": 0.01, "notill": 0.01 }, "source": "assumption", "note": "Established perennial meadow; not tilled", "color": "hay" }
+  }
+}

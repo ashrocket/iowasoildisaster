@@ -1,0 +1,7 @@
+id,name,harvested_acres,planted_acres,yield,yield_unit,production,production_unit,price,price_unit,value_usd,year,source
+corn_grain,"Corn, grain",13150000,,210,bu/acre,2761500000,bu,4.1,$/bu,11365200000,2025,nass-ia-2025
+corn_silage,"Corn, silage",250000,,25,tons/acre,6250000,tons,,,,2025,nass-ia-2025
+soybeans,Soybeans,9380000,9450000,63.5,bu/acre,595630000,bu,10.5,$/bu,6075426000,2025,nass-ia-2025
+alfalfa,"Hay and haylage, alfalfa",790000,70000,4.17,tons/acre dry,3293000,tons dry,,,352351000,2025,nass-ia-2025
+other_hay,"Hay and haylage, other",320000,,2.53,tons/acre dry,809000,tons dry,,,75237000,2025,nass-ia-2025
+oats,Oats,50000,120000,92,bu/acre,4600000,bu,3.55,$/bu,15640000,2025,nass-ia-2025

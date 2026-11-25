@@ -1,0 +1,20 @@
+{
+  "precip_annual_avg_in": { "value": 32.6, "period": "1895-2024", "source": "noaa-ia-summary" },
+  "precip_record_low_in": { "value": 20.2, "year": 1910, "source": "noaa-ia-summary" },
+  "precip_record_high_in": { "value": 47.9, "year": 1993, "source": "noaa-ia-summary" },
+  "precip_spring_avg_in": { "value": 9.2, "source": "noaa-ia-summary" },
+  "precip_summer_avg_in": { "value": 12.4, "source": "noaa-ia-summary" },
+  "heavy_rain_days": {
+    "note": "Days per year with 2 inches or more of precipitation, statewide",
+    "long_term_avg": 1.5,
+    "peak_5yr": { "period": "2015-2019", "value": 2.2 },
+    "source": "noaa-ia-summary"
+  },
+  "warming_since_1900_f": { "value": 1.5, "note": "mostly winter and fall", "source": "noaa-ia-summary" },
+  "projection_2041_2070": {
+    "annual_precip_change": "up to +5% (not statistically significant)",
+    "extremes": "heavier and more frequent extreme precipitation; droughts intensify with heat",
+    "source": "noaa-ia-summary"
+  },
+  "rainfall_erosivity_R": { "min": 160, "max": 200, "example": { "place": "Jasper County", "value": 180 }, "source": "isu-usle-1967" }
+}

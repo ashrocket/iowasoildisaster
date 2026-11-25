@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Iowa Soil Ledger</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Iowa's 2025 crops, lead and weather data, and a ten-year soil outlook per crop, on one zoomable canvas. Corrections welcome as GitHub pull requests.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="hud" id="hud">
+  <div class="hud-brand">
+    <span class="hud-mark" aria-hidden="true"></span>
+    <span>Iowa Soil Ledger</span>
+  </div>
+  <button class="hud-toggle" id="hud-toggle" type="button" aria-expanded="false" aria-controls="hud-controls">Scenario</button>
+  <div class="hud-controls" id="hud-controls">
+    <fieldset class="seg" id="tillage">
+      <legend>Tillage</legend>
+      <label><input type="radio" name="tillage" id="till-conventional" value="conventional"><span>Plowed</span></label>
+      <label><input type="radio" name="tillage" id="till-reduced" value="reduced" checked><span>Reduced</span></label>
+      <label><input type="radio" name="tillage" id="till-notill" value="notill"><span>No-till</span></label>
+    </fieldset>
+    <label class="ctl"><span>Rain intensity</span>
+      <select id="trend"></select>
+    </label>
+    <label class="ctl"><span>Slope factor LS <output id="ls-out">1.0</output></span>
+      <input type="range" id="ls" min="0.5" max="3" step="0.1" value="1">
+    </label>
+    <label class="ctl"><span>Lead scenario</span>
+      <select id="scenario"></select>
+    </label>
+  </div>
+</header>
+
+<main class="viewport" id="viewport" aria-label="Zoomable canvas. Drag to move, pinch or Ctrl and scroll to zoom.">
+  <div class="world" id="world">
+    <svg class="links" id="links" aria-hidden="true"></svg>
+  </div>
+</main>
+
+<nav class="jump" id="jump" aria-label="Jump to section"></nav>
+<div class="zoom" role="group" aria-label="Zoom">
+  <button type="button" id="zoom-out" aria-label="Zoom out">−</button>
+  <output id="zoom-level">100%</output>
+  <button type="button" id="zoom-in" aria-label="Zoom in">+</button>
+  <button type="button" id="zoom-fit">Fit</button>
+</div>
+<p class="loading" id="loading">Loading Iowa data…</p>
+
+<script src="model.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
