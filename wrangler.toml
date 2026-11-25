@@ -1,0 +1,6 @@
+# Cloudflare Pages settings for the site. The project name sets the free
+# address: https://iowasoildisaster.pages.dev
+# The deploy workflow copies only the site files into dist/ first.
+name = "iowasoildisaster"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-11-01"

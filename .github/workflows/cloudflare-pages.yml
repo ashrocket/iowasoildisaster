@@ -1,0 +1,27 @@
+name: Deploy to Cloudflare Pages
+
+# Runs only when started by hand from the Actions tab.
+# Needs two repository secrets: CLOUDFLARE_API_TOKEN (with the
+# "Cloudflare Pages: Edit" permission) and CLOUDFLARE_ACCOUNT_ID.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/validate.js && node --test
+      - name: Copy the site files
+        run: mkdir dist && cp -r index.html styles.css app.js model.js data dist/
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=iowasoildisaster --branch=main

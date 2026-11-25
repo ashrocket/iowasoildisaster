@@ -83,3 +83,20 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). In short: edit the file in `data/`, poin
 ## Publishing
 
 `.github/workflows/pages.yml` can publish the site to GitHub Pages. It is off until the owner turns on Pages (Settings, Pages, Source: GitHub Actions) and runs the workflow from the Actions tab. To republish on every merge, add a `push` trigger for `main` to the workflow.
+
+### Cloudflare Pages
+
+The site can also run on Cloudflare Pages as the project `iowasoildisaster`, which gives it the free address `https://iowasoildisaster.pages.dev`.
+
+1. In Cloudflare, create an API token with the **Cloudflare Pages: Edit** permission, and note your account ID.
+2. Add both to the repository as secrets named `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
+3. Run **Deploy to Cloudflare Pages** from the Actions tab. The first run creates the project.
+4. For your own domain, such as `iowasoildisaster.dev`, register it in Cloudflare Registrar, then add it under the Pages project's **Custom domains**.
+
+Locally, the same deploy is:
+
+```
+mkdir -p dist && cp -r index.html styles.css app.js model.js data dist/
+npx wrangler pages deploy dist --project-name=iowasoildisaster
+```
+
